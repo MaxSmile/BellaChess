@@ -1,21 +1,30 @@
 # Bella Chess
 
-A Flutter Chess game project.
+An Open Source Flutter Chess game project.
+
+![BellaChess Image](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/1024x500.jpg?alt=media&token=c5f4bb66-662d-4e03-9d28-a96b06a1e132)
 
 ## Description 
 
 Play classic chess on your Android with Bella Chess. Easy-to-use interface, multiple difficulty levels, and customizable options.
 
 ### Short Description:
-Bella Chess is a classic chess game for Android devices. It features an elegant and simple user interface, making it easy to play against the computer or another player.
+Play chess with Bella Chess. Easy-to-use interface, multiple difficulty levels
 
 ### Long Description:
-Bella Chess is a beautifully designed chess game for Android devices. It offers a classic chess experience with all the features you would expect from a top-quality chess game. The app features an elegant and simple user interface, which makes it easy to play against the computer or another player. The game includes various difficulty levels, so you can play at your own pace. It also has a built-in tutorial that will help you learn the game if you are new to chess. You can also customize the look and feel of the game by choosing from a variety of different chess piece sets and board styles. Whether you're a seasoned chess player or new to the game, Bella Chess is the perfect app for you.
+Bella Chess is a beautifully designed chess game. The app features an elegant and simple user interface, which makes it easy to play against the computer or another player. The game includes various difficulty levels and styling options.
+
+### Keywords 
+
+Chess, Classic, Strategy, Tactics, Board game
 
 
-## TODO
 
-Integration with bellachess.org
+## TODO / Roadmap
+1. Play online with friends
+2. Track your progress with a leaderboard
+3. Maintain a games history
+4. Integrate with Bellachess.org for enhanced gaming experience.
 
 ## Getting Started
 
@@ -40,7 +49,7 @@ To list devices available:
 flutter devices
 `
 
-Second column reperesents devices ID. Then:
+Second column reperesents devices ID. Then (example! You will have your device ID):
 
 `
 flutter run -d 09071FDD4002GR
