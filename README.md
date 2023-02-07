@@ -19,6 +19,16 @@ Bella Chess is a beautifully designed chess game. The app features an elegant an
 Chess, Classic, Strategy, Tactics, Board game
 
 
+## Available on App Markets
+
+[![Get it on Google Play](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/get-it-on-google-play.png?alt=media&token=5579314b-45fb-4097-b302-ab7f73ba1239)](https://play.google.com/store/apps/details?id=org.bellachess.mobile)
+
+https://play.google.com/store/apps/details?id=org.bellachess.mobile
+
+
+[![Available on the AppStore](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/AppStoreIcon.png?alt=media&token=3680cc4a-7ede-4b08-a77d-f31e622213bc)](https://apps.apple.com/us/app/bella-chess/id1669084126)
+
+https://apps.apple.com/us/app/bella-chess/id1669084126 
 
 ## TODO / Roadmap
 1. Play online with friends
