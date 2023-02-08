@@ -5,6 +5,7 @@ import 'package:bellachess/logic/move_calculation/move_calculation.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:bellachess/logic/shared_functions.dart';
 import 'package:bellachess/model/app_model.dart';
+import 'package:bellachess/model/app_stringfile.dart';
 import 'package:bellachess/views/components/main_menu_view/game_options/side_picker.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
@@ -279,6 +280,24 @@ class ChessGame extends FlameGame with TapDetector {
     }
   }
 
+  // void _drawBoard(Canvas canvas) {
+  //   for (int tileNo = 0; tileNo < 64; tileNo++) {
+  //     canvas.drawRect(
+  //       Rect.fromLTWH(
+  //         (tileNo % 8) * tileSize,
+  //         (tileNo / 8).floor() * tileSize,
+  //         tileSize,
+  //         tileSize,
+  //       ),
+  //       // TODO: DIFFERENT BORDS STYLES
+  //       Paint()
+  //         ..color = (tileNo + (tileNo / 8).floor()) % 2 == 0
+  //             ? appModel.theme.tilesColors.lightTile
+  //             : appModel.theme.tilesColors.darkTile,
+  //     );
+  //   }
+  // }
+
   void _drawBoard(Canvas canvas) {
     for (int tileNo = 0; tileNo < 64; tileNo++) {
       canvas.drawRect(
@@ -291,13 +310,27 @@ class ChessGame extends FlameGame with TapDetector {
         // TODO: DIFFERENT BORDS STYLES
         Paint()
           ..color = (tileNo + (tileNo / 8).floor()) % 2 == 0
-              ? appModel.theme.tilesColors.lightTile
-              : appModel.theme.tilesColors.darkTile,
+              ? appModel.boardColor == BoardColor.blacknwhite
+                  ? appModel.theme.tilesColors.blacknwhitelight
+                  : appModel.boardColor == BoardColor.midnight
+                      ? appModel.theme.tilesColors.midnightlight
+                      : appModel.boardColor == BoardColor.green
+                          ? appModel.theme.tilesColors.greenlight
+                          : appModel.boardColor == BoardColor.blue
+                              ? appModel.theme.tilesColors.bluelight
+                              : appModel.theme.tilesColors.lightTile
+              : appModel.boardColor == BoardColor.blacknwhite
+                  ? appModel.theme.tilesColors.blacknwhitedark
+                  : appModel.boardColor == BoardColor.midnight
+                      ? appModel.theme.tilesColors.midnightdark
+                      : appModel.boardColor == BoardColor.green
+                          ? appModel.theme.tilesColors.greendark
+                          : appModel.boardColor == BoardColor.blue
+                              ? appModel.theme.tilesColors.bluedark
+                              : appModel.theme.tilesColors.darkTile,
       );
     }
   }
-
-
 
   void _drawPieces(Canvas canvas) {
     for (var piece in board.player1Pieces + board.player2Pieces) {

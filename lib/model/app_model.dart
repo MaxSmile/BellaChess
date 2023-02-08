@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bellachess/logic/chess_game.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:bellachess/logic/shared_functions.dart';
+import 'package:bellachess/model/app_stringfile.dart';
 import 'package:bellachess/views/components/main_menu_view/game_options/side_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -18,8 +19,8 @@ const PIECE_THEMES = [
   'Classic',
   'Original',
   // '8-Bit',
-   'Letters',
-   'Video Chess',
+  'Letters',
+  'Video Chess',
   // 'Lewis Chessmen',
   // 'Mexico City'
 ];
@@ -32,6 +33,9 @@ class AppModel extends ChangeNotifier {
   int timeLimit = 15;
   String pieceTheme = 'Classic';
   String themeName = 'Dark';
+
+  String boardColor = BoardColor.lightTile;
+
   bool showMoveHistory = true;
   bool allowUndoRedo = true;
   bool soundEnabled = true;
@@ -74,7 +78,7 @@ class AppModel extends ChangeNotifier {
           _interstitialAd = ad;
         },
         onAdFailedToLoad: (err) {
-         debugPrint('Failed to load an interstitial ad: ${err.message}');
+          debugPrint('Failed to load an interstitial ad: ${err.message}');
         },
       ),
     );
@@ -110,6 +114,8 @@ class AppModel extends ChangeNotifier {
 
   bool get isAIsTurn {
     return playingWithAI && (turn == aiTurn);
+
+    // return true;
   }
 
   bool get playingWithAI {
@@ -249,6 +255,11 @@ class AppModel extends ChangeNotifier {
     themeName = themeList[index].name;
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('themeName', themeName);
+    notifyListeners();
+  }
+
+  void setboardColor(String name) async {
+    boardColor = name;
     notifyListeners();
   }
 

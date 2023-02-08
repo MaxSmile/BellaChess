@@ -2,6 +2,7 @@
 
 import 'package:bellachess/model/app_model.dart';
 import 'package:bellachess/views/components/image.dart';
+import 'package:bellachess/views/components/settings_view/board_colortheme.dart';
 import 'package:bellachess/views/components/settings_view/piece_theme_picker.dart';
 // import 'package:bellachess/views/components/webviewscreen.dart';
 // import 'package:flutter/cupertino.dart';
@@ -26,7 +27,6 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<AppModel>(
       builder: (context, appModel, child) => SafeArea(
         child: Container(
@@ -36,7 +36,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ? Imageurl.secondbackground
                       : Imageurl.whitetheme),
                   fit: BoxFit.fill)),
-          padding: const EdgeInsets.all(35),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               Row(
@@ -59,7 +59,6 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               Text(appModel.themeName),
-
               // TextLarges('Settings',
               //     color: appModel.themeName == "Dark"
               //         ? Colors.white
@@ -73,6 +72,8 @@ class _SettingsViewState extends State<SettingsView> {
                     const AppThemePicker(),
                     const SizedBox(height: 10),
                     Toggles(appModel),
+                    const SizedBox(height: 10),
+                    const BoardColortheme(),
                     const SizedBox(height: 10),
                     const PieceThemePicker(),
                   ],

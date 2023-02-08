@@ -7,6 +7,9 @@ import 'package:bellachess/views/components/chess_view/game_info_and_controls.da
 import 'package:bellachess/views/components/chess_view/game_info_and_controls/game_status_computer.dart';
 import 'package:bellachess/views/components/chess_view/promotion_dialog.dart';
 import 'package:bellachess/views/components/image.dart';
+import 'package:bellachess/views/components/main_menu_view/game_options/side_picker.dart';
+import 'package:bellachess/views/lossscreen.dart';
+import 'package:bellachess/views/winscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
@@ -70,6 +73,7 @@ class _ChessViewState extends State<ChessView> {
             onWillPop: _willPopCallback,
             child: Container(
               decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.all(Radius.circular(8)),
                   image: DecorationImage(
                       image: AssetImage(appModel.themeName == "Dark"
                           ? Imageurl.secondbackground
@@ -95,10 +99,68 @@ class _ChessViewState extends State<ChessView> {
                     child: const GameStatusComputerScreen(),
                   ),
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: ChessBoardWidget(appModel),
+
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: ChessBoardWidget(appModel),
+                  // ),
+
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: ChessBoardWidget(appModel),
+                      ),
+                      if (appModel.gameOver)
+                        if (appModel.playerCount == 1)
+                          if (appModel.isAIsTurn)
+                            Center(
+                              child: WinScreen(
+                                callback: (value) {
+                                  if (value == "play") {
+                                    appModel.newGame(context);
+                                  } else {
+                                    appModel.exitChessView();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              ),
+                            ),
+                      if (appModel.gameOver)
+                        if (appModel.playerCount != 1)
+                          if (appModel.turn == Player.player1)
+                            Center(
+                              child: LossScreen(
+                                colorname: 'Black wins',
+                                callback: (value) {
+                                  if (value == "play") {
+                                    appModel.newGame(context);
+                                  } else {
+                                    appModel.exitChessView();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              ),
+                            ),
+                      if (appModel.gameOver)
+                        if (appModel.playerCount != 1)
+                          if (appModel.turn != Player.player1)
+                            Center(
+                              child: LossScreen(
+                                colorname: 'White wins',
+                                callback: (value) {
+                                  if (value == "play") {
+                                    appModel.newGame(context);
+                                  } else {
+                                    appModel.exitChessView();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                              ),
+                            ),
+                    ],
                   ),
+
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),

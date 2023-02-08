@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bellachess/logic/shared_functions.dart';
 import 'package:bellachess/model/app_model.dart';
+import 'package:bellachess/model/app_stringfile.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
@@ -43,8 +44,24 @@ class PiecePreview extends FlameGame {
         // TODO: DIFFERENT BOARDS STYLES
         Paint()
           ..color = (index + (index / 2).floor()) % 2 == 0
-              ? appModel.theme.tilesColors.lightTile
-              : appModel.theme.tilesColors.darkTile,
+              ? appModel.boardColor == BoardColor.blacknwhite
+                  ? appModel.theme.tilesColors.blacknwhitelight
+                  : appModel.boardColor == BoardColor.midnight
+                      ? appModel.theme.tilesColors.midnightlight
+                      : appModel.boardColor == BoardColor.green
+                          ? appModel.theme.tilesColors.greenlight
+                          : appModel.boardColor == BoardColor.blue
+                              ? appModel.theme.tilesColors.bluelight
+                              : appModel.theme.tilesColors.lightTile
+              : appModel.boardColor == BoardColor.blacknwhite
+                  ? appModel.theme.tilesColors.blacknwhitedark
+                  : appModel.boardColor == BoardColor.midnight
+                      ? appModel.theme.tilesColors.midnightdark
+                      : appModel.boardColor == BoardColor.green
+                          ? appModel.theme.tilesColors.greendark
+                          : appModel.boardColor == BoardColor.blue
+                              ? appModel.theme.tilesColors.bluedark
+                              : appModel.theme.tilesColors.darkTile,
       );
       spriteMap[index].render(
         canvas,
