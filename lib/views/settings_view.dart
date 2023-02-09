@@ -1,18 +1,12 @@
-// import 'dart:io';
-
 import 'package:bellachess/model/app_model.dart';
 import 'package:bellachess/views/components/image.dart';
-import 'package:bellachess/views/components/settings_view/board_colortheme.dart';
 import 'package:bellachess/views/components/settings_view/piece_theme_picker.dart';
-// import 'package:bellachess/views/components/webviewscreen.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import 'components/settings_view/app_theme_picker.dart';
 import 'components/settings_view/toggles.dart';
-import 'components/shared/bottom_padding.dart';
 import 'components/shared/text_variable.dart';
 
 class SettingsView extends StatefulWidget {
@@ -59,11 +53,6 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               Text(appModel.themeName),
-              // TextLarges('Settings',
-              //     color: appModel.themeName == "Dark"
-              //         ? Colors.white
-              //         : Colors.black),
-              // const SizedBox(height: 10),
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -72,8 +61,8 @@ class _SettingsViewState extends State<SettingsView> {
                     const AppThemePicker(),
                     const SizedBox(height: 10),
                     Toggles(appModel),
-                    const SizedBox(height: 10),
-                    const BoardColortheme(),
+                    // const SizedBox(height: 10),
+                    // const BoardColortheme(),
                     const SizedBox(height: 10),
                     const PieceThemePicker(),
                   ],

@@ -3,7 +3,6 @@ import 'package:bellachess/views/components/chess_view/game_info_and_controls/al
 import 'package:bellachess/views/components/chess_view/game_info_and_controls/moves_undo_redo_row/move_list.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class GameInfoAndControls extends StatelessWidget {
   final AppModel appModel;
   final ScrollController scrollController = ScrollController();

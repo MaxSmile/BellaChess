@@ -65,6 +65,7 @@ class AllButtonsScreen extends StatelessWidget {
   }
 
   void undo() {
+    appModel.tryToShowAds();
     if (appModel.playingWithAI) {
       appModel.game.undoTwoMoves();
     } else {
@@ -73,6 +74,7 @@ class AllButtonsScreen extends StatelessWidget {
   }
 
   void redo() {
+    appModel.tryToShowAds();
     if (appModel.playingWithAI) {
       appModel.game.redoTwoMoves();
     } else {

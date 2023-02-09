@@ -11,10 +11,10 @@ class TilesColors {
 
   final Color darkTile = const Color(0xFF69493b);
 
-  final Color blacknwhitelight = const Color(0xFFf9faff);
+  final Color blacknwhitelight = const Color.fromARGB(255, 175, 181, 210);
   final Color blacknwhitedark = const Color(0xFF434546);
 
-  final Color midnightlight = const Color(0xFFf0ebed);
+  final Color midnightlight = const Color.fromARGB(255, 222, 191, 203);
   final Color midnightdark = const Color(0xFF6d779c);
 
   final Color greenlight = const Color(0xFF1f352b);
@@ -66,9 +66,9 @@ List<AppTheme> get themeList {
       // border: const Color(0xff184387),
       // lightTile: const Color(0xffECD9B9),
       // darkTile: const Color(0xffBB8C61),
-      moveHint: const Color(0xffFFFFFF),
+      moveHint: Color.fromARGB(157, 239, 207, 127),
       checkHint: const Color.fromARGB(135, 184, 111, 111),
-      latestMove: const Color(0xffFFFFFF),
+      latestMove: Color.fromARGB(148, 202, 181, 158),
       border: const Color(0xffA68463),
     ),
     AppTheme(
@@ -83,9 +83,9 @@ List<AppTheme> get themeList {
       ),
       // lightTile: const Color(0xffECD9B9),
       // darkTile: const Color(0xffBB8C61),
-      moveHint: const Color(0xffFFFFFF),
+      moveHint: Color.fromARGB(193, 221, 239, 187),
       checkHint: const Color.fromARGB(135, 184, 111, 111),
-      latestMove: const Color(0xffFFFFFF),
+      latestMove: Color.fromARGB(85, 205, 213, 146),
       border: const Color(0xffA68463),
     ),
   ];

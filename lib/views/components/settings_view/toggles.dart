@@ -71,19 +71,19 @@ class Toggles extends StatelessWidget {
                     appModel.themeName == "Dark" ? Colors.white : Colors.black,
               )
             : Container(),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) =>
-                    WebViewScreensShow(),
-              ),
-            );
-          },
-          child: TextRegulars("Crypto Currency ",
-              appModel.themeName == "Dark" ? Colors.white : Colors.black),
-        ),
+        // GestureDetector(
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       CupertinoPageRoute(
+        //         builder: (context) =>
+        //             WebViewScreensShow(),
+        //       ),
+        //     );
+        //   },
+        //   child: TextRegulars("Crypto Currency ",
+        //       appModel.themeName == "Dark" ? Colors.white : Colors.black),
+        // ),
       ],
     );
   }

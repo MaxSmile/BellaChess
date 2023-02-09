@@ -34,7 +34,7 @@ class BoardColortheme extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     //  appModel.setTheme(0);
-                    appModel.setboardColor(BoardColor.lightTile);
+                    appModel.setBoardColor(4);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(3),
@@ -57,7 +57,7 @@ class BoardColortheme extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    appModel.setboardColor(BoardColor.blacknwhite);
+                    appModel.setBoardColor(0);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(1),
@@ -81,7 +81,7 @@ class BoardColortheme extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     // appModel.setboardColor(1);
-                    appModel.setboardColor(BoardColor.midnight);
+                    appModel.setBoardColor(1);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(1),
@@ -104,7 +104,7 @@ class BoardColortheme extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    appModel.setboardColor(BoardColor.green);
+                    appModel.setBoardColor(2);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(1),
@@ -127,7 +127,7 @@ class BoardColortheme extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    appModel.setboardColor(BoardColor.blue);
+                    appModel.setBoardColor(3);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(1),

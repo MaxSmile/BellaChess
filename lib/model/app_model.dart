@@ -61,6 +61,12 @@ class AppModel extends ChangeNotifier {
 
   InterstitialAd _interstitialAd;
 
+  void tryToShowAds() {
+    if (_interstitialAd != null) {
+      _interstitialAd.show();
+    }
+  }
+
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: Platform.isAndroid
@@ -158,9 +164,7 @@ class AppModel extends ChangeNotifier {
     });
 
     if (notify) {
-      if (_interstitialAd != null) {
-        _interstitialAd.show();
-      }
+      tryToShowAds();
 
       notifyListeners();
     }
@@ -169,10 +173,6 @@ class AppModel extends ChangeNotifier {
   void exitChessView() {
     game.cancelAIMove();
     timer.cancel();
-
-    if (_interstitialAd != null) {
-      _interstitialAd.show();
-    }
 
     notifyListeners();
   }
@@ -258,8 +258,8 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setboardColor(String name) async {
-    boardColor = name;
+  void setBoardColor(int index) async {
+    boardColor = boardIndexes[index];
     notifyListeners();
   }
 

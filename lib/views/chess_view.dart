@@ -36,7 +36,6 @@ class _ChessViewState extends State<ChessView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     BannerAd(
       adUnitId: Platform.isAndroid
           ? 'ca-app-pub-1743741155411869/9954608614'
@@ -99,11 +98,6 @@ class _ChessViewState extends State<ChessView> {
                     child: const GameStatusComputerScreen(),
                   ),
                   const SizedBox(height: 20),
-
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: ChessBoardWidget(appModel),
-                  // ),
 
                   Stack(
                     children: [
@@ -168,7 +162,6 @@ class _ChessViewState extends State<ChessView> {
                   ),
                   const Spacer(),
                   GameInfoAndControls(appModel),
-                  // _interstitialAd.show();
 
                   const BottomPadding(),
                   // bottom screen

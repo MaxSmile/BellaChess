@@ -10,24 +10,11 @@ class ChessBoardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        "MediaQuery.of(context).size.width ${MediaQuery.of(context).size.width / 9}");
+    //debugPrint("MediaQuery.of(context).size.width ${MediaQuery.of(context).size.width / 9}");
     return Stack(
       alignment: Alignment.center,
       clipBehavior: Clip.none,
       children: [
-        // Container(
-        //   width: MediaQuery.of(context).size.width,
-        //   height: MediaQuery.of(context).size.width + 10,
-        //   // ignore: prefer_const_constructors
-        //   decoration: BoxDecoration(
-        //       image: DecorationImage(
-        //           image: AssetImage(appModel.themeName == "Dark"
-        //               ? "assets/images/board.png"
-        //               : "assets/images/boardwhite.png"),
-        //           fit: BoxFit.fill)),
-        // ),
-
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width + 10,
@@ -46,8 +33,6 @@ class ChessBoardWidget extends StatelessWidget {
                                       : "assets/images/board.png"),
                   fit: BoxFit.fill)),
         ),
-
-        // TODO: Game size adjustment
         Center(
           child: SizedBox(
             child: GameWidget(game: appModel.game),
