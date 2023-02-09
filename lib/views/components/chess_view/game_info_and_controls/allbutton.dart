@@ -40,14 +40,18 @@ class AllButtonsScreen extends StatelessWidget {
         GestureDetector(
           child: Icon(
             CupertinoIcons.arrow_uturn_left,
-            color: appModel.themeName == "Dark" ? Colors.white : Colors.black,
+            color: undoEnabled
+                ? (appModel.themeName == "Dark" ? Colors.white : Colors.black)
+                : Colors.grey,
           ),
           onTap: undoEnabled ? () => undo() : null,
         ),
         GestureDetector(
           child: Icon(
             CupertinoIcons.arrow_uturn_right,
-            color: appModel.themeName == "Dark" ? Colors.white : Colors.black,
+            color: redoEnabled
+                ? (appModel.themeName == "Dark" ? Colors.white : Colors.black)
+                : Colors.grey,
           ),
           onTap: redoEnabled ? () => redo() : null,
         ),
