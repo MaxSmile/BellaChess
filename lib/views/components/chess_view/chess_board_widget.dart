@@ -1,3 +1,4 @@
+import 'package:bellachess/logic/chess_game.dart';
 import 'package:bellachess/model/app_model.dart';
 import 'package:bellachess/model/app_stringfile.dart';
 import 'package:flame/game.dart';
@@ -35,7 +36,7 @@ class ChessBoardWidget extends StatelessWidget {
         ),
         Center(
           child: SizedBox(
-            child: GameWidget(game: appModel.game),
+            child: GameWidget(game: appModel.game as ChessGame),
             width: MediaQuery.of(context).size.width -
                 MediaQuery.of(context).size.width / 9,
             height: MediaQuery.of(context).size.width -

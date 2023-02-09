@@ -1,7 +1,7 @@
 import 'package:bellachess/logic/chess_piece.dart';
 
 class Move {
-  int? from;
+  int from;
   int to;
   ChessPieceType promotionType;
 
@@ -9,7 +9,7 @@ class Move {
 
   @override
   // ignore: avoid_renaming_method_parameters
-  bool operator ==(move) => from == move.from && to == move.to;
+  bool operator ==(covariant Move move) => from == move.from && to == move.to;
 
   // ignore: unnecessary_overrides
   @override
