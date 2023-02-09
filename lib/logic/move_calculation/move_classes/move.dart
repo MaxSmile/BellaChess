@@ -1,7 +1,7 @@
 import 'package:bellachess/logic/chess_piece.dart';
 
 class Move {
-  int from;
+  int? from;
   int to;
   ChessPieceType promotionType;
 

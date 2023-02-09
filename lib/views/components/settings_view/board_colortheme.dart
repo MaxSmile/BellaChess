@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BoardColortheme extends StatelessWidget {
-  const BoardColortheme({Key key}) : super(key: key);
+  const BoardColortheme({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 import 'components/main_menu_view/main_menu_buttons.dart';
 
 class MainMenuView extends StatefulWidget {
-  const MainMenuView({Key key}) : super(key: key);
+  const MainMenuView({Key? key}) : super(key: key);
 
   @override
   _MainMenuViewState createState() => _MainMenuViewState();
 }
 
 class _MainMenuViewState extends State<MainMenuView> {
-  InterstitialAd interstitialAd;
+  InterstitialAd? interstitialAd;
 
   @override
   Widget build(BuildContext context) {

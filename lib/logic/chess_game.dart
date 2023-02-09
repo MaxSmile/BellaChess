@@ -19,18 +19,18 @@ import 'chess_piece.dart';
 import 'move_calculation/move_classes/move.dart';
 
 class ChessGame extends FlameGame with TapDetector {
-  double width;
-  double tileSize;
+  late double width;
+  double? tileSize;
   AppModel appModel;
   BuildContext context;
   ChessBoard board = ChessBoard();
   Map<ChessPiece, ChessPieceSprite> spriteMap = {};
 
-  CancelableOperation aiOperation;
+  CancelableOperation? aiOperation;
   List<int> validMoves = [];
-  ChessPiece selectedPiece;
-  int checkHintTile;
-  Move latestMove;
+  ChessPiece? selectedPiece;
+  int? checkHintTile;
+  Move? latestMove;
 
   ChessGame(this.appModel, this.context) {
     width = MediaQuery.of(context).size.width;
@@ -56,7 +56,7 @@ class ChessGame extends FlameGame with TapDetector {
       } else {
         if (selectedPiece != null &&
             touchedPiece != null &&
-            touchedPiece.player == selectedPiece.player) {
+            touchedPiece.player == selectedPiece!.player) {
           if (validMoves.contains(tile)) {
             _movePiece(tile);
           } else {
@@ -72,7 +72,7 @@ class ChessGame extends FlameGame with TapDetector {
     }
   }
 
-  Sprite player;
+  Sprite? player;
 
   @override
   Future<void> onLoad() async {
@@ -110,18 +110,18 @@ class ChessGame extends FlameGame with TapDetector {
   void update(double t) {
     if (appModel != null) {
       for (var piece in board.player1Pieces + board.player2Pieces) {
-        spriteMap[piece].update(tileSize, appModel, piece);
+        spriteMap[piece]!.update(tileSize, appModel, piece);
       }
     }
   }
 
   void _initSpritePositions() {
     for (var piece in board.player1Pieces + board.player2Pieces) {
-      spriteMap[piece].initSpritePosition(tileSize, appModel);
+      spriteMap[piece]!.initSpritePosition(tileSize, appModel);
     }
   }
 
-  void _selectPiece(ChessPiece piece) {
+  void _selectPiece(ChessPiece? piece) {
     if (piece != null) {
       if (piece.player == appModel.turn) {
         selectedPiece = piece;
@@ -138,7 +138,7 @@ class ChessGame extends FlameGame with TapDetector {
   void _movePiece(int tile) {
     if (validMoves.contains(tile)) {
       validMoves = [];
-      var meta = push(Move(selectedPiece.tile, tile), board, getMeta: true);
+      var meta = push(Move(selectedPiece!.tile, tile), board, getMeta: true);
       if (meta.promotion) {
         appModel.requestPromotion();
       }
@@ -155,7 +155,7 @@ class ChessGame extends FlameGame with TapDetector {
     aiOperation = CancelableOperation.fromFuture(
       compute(calculateAIMove, args),
     );
-    aiOperation.value.then((move) {
+    aiOperation!.value.then((move) {
       if (move == null || appModel.gameOver) {
         appModel.endGame();
       } else {
@@ -171,7 +171,7 @@ class ChessGame extends FlameGame with TapDetector {
 
   void cancelAIMove() {
     if (aiOperation != null) {
-      aiOperation.cancel();
+      aiOperation!.cancel();
     }
   }
 
@@ -218,8 +218,8 @@ class ChessGame extends FlameGame with TapDetector {
         clearRedo: false, updateMetaList: true);
   }
 
-  void promote(ChessPieceType type) {
-    board.moveStack.last.movedPiece.type = type;
+  void promote(ChessPieceType? type) {
+    board.moveStack.last.movedPiece!.type = type;
     board.moveStack.last.promotionType = type;
     addPromotedPiece(board, board.moveStack.last);
     appModel.moveMetaList.last.promotionType = type;
@@ -242,7 +242,7 @@ class ChessGame extends FlameGame with TapDetector {
     var oppositeTurn = oppositePlayer(appModel.turn);
     if (kingInCheck(oppositeTurn, board)) {
       meta.isCheck = true;
-      checkHintTile = kingForPlayer(oppositeTurn, board).tile;
+      checkHintTile = kingForPlayer(oppositeTurn, board)!.tile;
     }
     if (kingInCheckmate(oppositeTurn, board)) {
       if (!meta.isCheck) {
@@ -272,11 +272,11 @@ class ChessGame extends FlameGame with TapDetector {
     if (appModel.flip &&
         appModel.playingWithAI &&
         appModel.playerSide == Player.player2) {
-      return (7 - (vector2.y / tileSize).floor()) * 8 +
-          (7 - (vector2.x / tileSize).floor());
+      return (7 - (vector2.y / tileSize!).floor()) * 8 +
+          (7 - (vector2.x / tileSize!).floor());
     } else {
-      return (vector2.y / tileSize).floor() * 8 +
-          (vector2.x / tileSize).floor();
+      return (vector2.y / tileSize!).floor() * 8 +
+          (vector2.x / tileSize!).floor();
     }
   }
 
@@ -302,10 +302,10 @@ class ChessGame extends FlameGame with TapDetector {
     for (int tileNo = 0; tileNo < 64; tileNo++) {
       canvas.drawRect(
         Rect.fromLTWH(
-          (tileNo % 8) * tileSize,
-          (tileNo / 8).floor() * tileSize,
-          tileSize,
-          tileSize,
+          (tileNo % 8) * tileSize!,
+          (tileNo / 8).floor() * tileSize!,
+          tileSize!,
+          tileSize!,
         ),
         // TODO: DIFFERENT BORDS STYLES
         Paint()
@@ -334,12 +334,12 @@ class ChessGame extends FlameGame with TapDetector {
 
   void _drawPieces(Canvas canvas) {
     for (var piece in board.player1Pieces + board.player2Pieces) {
-      spriteMap[piece].sprite.render(
+      spriteMap[piece]!.sprite.render(
             canvas,
-            size: Vector2(tileSize - 2, tileSize - 2),
+            size: Vector2(tileSize! - 2, tileSize! - 2),
             position: Vector2(
-              spriteMap[piece].spriteX + 1,
-              spriteMap[piece].spriteY + 1,
+              spriteMap[piece]!.spriteX + 1,
+              spriteMap[piece]!.spriteY + 1,
             ),
           );
     }
@@ -349,10 +349,10 @@ class ChessGame extends FlameGame with TapDetector {
     for (var tile in validMoves) {
       canvas.drawCircle(
         Offset(
-          getXFromTile(tile, tileSize, appModel) + (tileSize / 2),
-          getYFromTile(tile, tileSize, appModel) + (tileSize / 2),
+          getXFromTile(tile, tileSize, appModel) + (tileSize! / 2),
+          getYFromTile(tile, tileSize, appModel) + (tileSize! / 2),
         ),
-        tileSize / 5,
+        tileSize! / 5,
         Paint()..color = appModel.theme.moveHint,
       );
     }
@@ -362,19 +362,19 @@ class ChessGame extends FlameGame with TapDetector {
     if (latestMove != null) {
       canvas.drawRect(
         Rect.fromLTWH(
-          getXFromTile(latestMove.from, tileSize, appModel),
-          getYFromTile(latestMove.from, tileSize, appModel),
-          tileSize,
-          tileSize,
+          getXFromTile(latestMove!.from, tileSize, appModel),
+          getYFromTile(latestMove!.from, tileSize, appModel),
+          tileSize!,
+          tileSize!,
         ),
         Paint()..color = appModel.theme.latestMove,
       );
       canvas.drawRect(
         Rect.fromLTWH(
-          getXFromTile(latestMove.to, tileSize, appModel),
-          getYFromTile(latestMove.to, tileSize, appModel),
-          tileSize,
-          tileSize,
+          getXFromTile(latestMove!.to, tileSize, appModel),
+          getYFromTile(latestMove!.to, tileSize, appModel),
+          tileSize!,
+          tileSize!,
         ),
         Paint()..color = appModel.theme.latestMove,
       );
@@ -387,8 +387,8 @@ class ChessGame extends FlameGame with TapDetector {
         Rect.fromLTWH(
           getXFromTile(checkHintTile, tileSize, appModel),
           getYFromTile(checkHintTile, tileSize, appModel),
-          tileSize,
-          tileSize,
+          tileSize!,
+          tileSize!,
         ),
         Paint()..color = appModel.theme.checkHint,
       );
@@ -399,10 +399,10 @@ class ChessGame extends FlameGame with TapDetector {
     if (selectedPiece != null) {
       canvas.drawRect(
         Rect.fromLTWH(
-          getXFromTile(selectedPiece.tile, tileSize, appModel),
-          getYFromTile(selectedPiece.tile, tileSize, appModel),
-          tileSize,
-          tileSize,
+          getXFromTile(selectedPiece!.tile, tileSize, appModel),
+          getYFromTile(selectedPiece!.tile, tileSize, appModel),
+          tileSize!,
+          tileSize!,
         ),
         Paint()..color = appModel.theme.moveHint,
       );

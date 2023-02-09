@@ -5,10 +5,10 @@ import 'picker.dart';
 class GameModePicker extends StatefulWidget {
   final int playerCount;
   final Function setFunc;
-  final String themeName;
+  final String? themeName;
 
   const GameModePicker(this.playerCount, this.setFunc, this.themeName,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -16,7 +16,7 @@ class GameModePicker extends StatefulWidget {
 }
 
 class _GameModePickerState extends State<GameModePicker> {
-  Map<int, Widget> playerCountOptions;
+  Map<int, Widget>? playerCountOptions;
   @override
   void initState() {
     playertext(widget.playerCount);

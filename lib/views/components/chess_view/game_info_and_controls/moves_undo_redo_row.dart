@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 class MovesUndoRedoRow extends StatelessWidget {
   final AppModel appModel;
 
-  const MovesUndoRedoRow(this.appModel, {Key key}) : super(key: key);
+  const MovesUndoRedoRow(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

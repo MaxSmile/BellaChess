@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:bellachess/model/app_stringfile.dart';
 
 class PieceThemePicker extends StatelessWidget {
-  const PieceThemePicker({Key key}) : super(key: key);
+  const PieceThemePicker({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

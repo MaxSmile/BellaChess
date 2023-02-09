@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 class ChessBoardWidget extends StatelessWidget {
   final AppModel appModel;
 
-  const ChessBoardWidget(this.appModel, {Key key}) : super(key: key);
+  const ChessBoardWidget(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

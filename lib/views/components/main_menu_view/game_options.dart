@@ -9,7 +9,7 @@ import 'game_options/time_limit_picker.dart';
 class GameOptions extends StatelessWidget {
   final AppModel appModel;
 
-  const GameOptions(this.appModel, {Key key}) : super(key: key);
+  const GameOptions(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

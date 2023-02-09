@@ -10,7 +10,7 @@ class MoveList extends StatelessWidget {
   final AppModel appModel;
   final ScrollController scrollController = ScrollController();
 
-  MoveList(this.appModel, {Key key}) : super(key: key);
+  MoveList(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +75,9 @@ class MoveList extends StatelessWidget {
       move = 'O-O-O';
     } else {
       String ambiguity =
-          meta.rowIsAmbiguous ? _colToChar(tileToCol(meta.move.from)) : '';
+          meta.rowIsAmbiguous ? _colToChar(tileToCol(meta.move.from!)) : '';
       ambiguity +=
-          meta.colIsAmbiguous ? '${8 - tileToRow(meta.move.from)}' : '';
+          meta.colIsAmbiguous ? '${8 - tileToRow(meta.move.from!)}' : '';
       String takeString = meta.took ? 'x' : '';
       String promotion =
           meta.promotion ? '=${_pieceToChar(meta.promotionType)}' : '';
@@ -91,7 +91,7 @@ class MoveList extends StatelessWidget {
     return move + '$check$checkmate';
   }
 
-  String _pieceToChar(ChessPieceType type) {
+  String _pieceToChar(ChessPieceType? type) {
     switch (type) {
       case ChessPieceType.king:
         {

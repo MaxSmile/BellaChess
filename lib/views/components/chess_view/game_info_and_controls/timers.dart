@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Timers extends StatelessWidget {
   final AppModel appModel;
 
-  const Timers(this.appModel, {Key key}) : super(key: key);
+  const Timers(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import '../../shared/text_variable.dart';
 
 class Picker<T> extends StatelessWidget {
-  final String label;
-  final Map<T, Widget> options;
-  final T selection;
-  final Function setFunc;
-  final String themeName;
+  final String? label;
+  final Map<T, Widget>? options;
+  final T? selection;
+  final Function? setFunc;
+  final String? themeName;
 
   const Picker(
-      {Key key,
+      {Key? key,
       this.label,
       this.options,
       this.selection,
@@ -32,10 +32,10 @@ class Picker<T> extends StatelessWidget {
               border: Border.all(
                   color: themeName == "Dark" ? Colors.white : Colors.black)),
           child: CupertinoSlidingSegmentedControl<T>(
-            children: options,
+            children: options!,
             groupValue: selection,
-            onValueChanged: (T val) {
-              setFunc(val);
+            onValueChanged: (T? val) {
+              setFunc!(val);
             },
             thumbColor: themeName == "Dark"
                 ? Colorsdata.buttoncolors

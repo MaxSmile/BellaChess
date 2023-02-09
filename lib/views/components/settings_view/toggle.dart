@@ -6,11 +6,11 @@ import '../shared/text_variable.dart';
 
 class Toggle extends StatelessWidget {
   final String label;
-  final bool toggle;
-  final Function setFunc;
-  final String apptheme;
+  final bool? toggle;
+  final Function? setFunc;
+  final String? apptheme;
 
-  const Toggle(this.label, {Key key, this.toggle, this.apptheme, this.setFunc})
+  const Toggle(this.label, {Key? key, this.toggle, this.apptheme, this.setFunc})
       : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class Toggle extends StatelessWidget {
           TextRegulars(label, apptheme == "Dark" ? Colors.white : Colors.black),
           const Spacer(),
           CupertinoSwitch(
-            value: toggle,
-            onChanged: setFunc,
+            value: toggle!,
+            onChanged: setFunc as void Function(bool)?,
             activeColor: Colorsdata.buttoncolors,
             thumbColor: Colorsdata.playbuttoncolors,
           ),

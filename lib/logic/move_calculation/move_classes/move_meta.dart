@@ -6,12 +6,12 @@ import 'move.dart';
 class MoveMeta {
   Move move;
   Player player;
-  ChessPieceType type;
+  ChessPieceType? type;
   bool took = false;
   bool kingCastle = false;
   bool queenCastle = false;
   bool promotion = false;
-  ChessPieceType promotionType;
+  ChessPieceType? promotionType;
   bool isCheck = false;
   bool isCheckmate = false;
   bool isStalemate = false;

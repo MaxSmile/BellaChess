@@ -4,7 +4,7 @@ class RoundedIconButton extends StatelessWidget {
   final IconData icon;
   final Function onPressed;
 
-  const RoundedIconButton(this.icon, {Key key, @required this.onPressed})
+  const RoundedIconButton(this.icon, {Key? key, required this.onPressed})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class RoundedIconButton extends StatelessWidget {
         color: const Color(0x20000000),
         child: Icon(icon, color: const Color(0xffffffff)),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
       ),
       width: double.infinity,
       height: 60,

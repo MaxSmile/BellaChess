@@ -3,11 +3,11 @@ import 'package:bellachess/views/components/shared/text_style.dart';
 import 'package:flutter/material.dart';
 
 class TimeLimitPicker extends StatefulWidget {
-  final int selectedTime;
-  final Function setTime;
-  final String themeName;
+  final int? selectedTime;
+  final Function? setTime;
+  final String? themeName;
   const TimeLimitPicker(
-      {Key key, this.selectedTime, this.setTime, this.themeName})
+      {Key? key, this.selectedTime, this.setTime, this.themeName})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class TimeLimitPicker extends StatefulWidget {
 }
 
 class _TimeLimitPickerState extends State<TimeLimitPicker> {
-  Map<int, Widget> timeOptions;
+  Map<int, Widget>? timeOptions;
 
   @override
   void initState() {

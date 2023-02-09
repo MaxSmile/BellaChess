@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WinScreen extends StatelessWidget {
-  final Function callback;
+  final Function? callback;
 
-  const WinScreen({Key key, this.callback}) : super(key: key);
+  const WinScreen({Key? key, this.callback}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class WinScreen extends StatelessWidget {
                 IconButton(
                   color: Colors.white,
                   onPressed: () {
-                    callback("ok");
+                    callback!("ok");
                   },
                   icon: Icon(Icons.close),
                 ),
@@ -61,7 +61,7 @@ class WinScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                callback("play");
+                callback!("play");
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * .05,

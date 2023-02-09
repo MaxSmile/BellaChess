@@ -20,7 +20,7 @@ import 'components/shared/bottom_padding.dart';
 class ChessView extends StatefulWidget {
   final AppModel appModel;
 
-  const ChessView(this.appModel, {Key key}) : super(key: key);
+  const ChessView(this.appModel, {Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
@@ -32,7 +32,7 @@ class _ChessViewState extends State<ChessView> {
 
   _ChessViewState(this.appModel);
   // ignore: unused_field
-  BannerAd _bannerAd;
+  BannerAd? _bannerAd;
 
   @override
   void initState() {
@@ -87,9 +87,9 @@ class _ChessViewState extends State<ChessView> {
                     Align(
                       alignment: Alignment.topCenter,
                       child: SizedBox(
-                        width: _bannerAd.size.width.toDouble(),
-                        height: _bannerAd.size.height.toDouble(),
-                        child: AdWidget(ad: _bannerAd),
+                        width: _bannerAd!.size.width.toDouble(),
+                        height: _bannerAd!.size.height.toDouble(),
+                        child: AdWidget(ad: _bannerAd!),
                       ),
                     ),
                   const Spacer(),

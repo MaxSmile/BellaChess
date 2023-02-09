@@ -14,7 +14,7 @@ const PROMOTIONS = [
 class PromotionDialog extends StatelessWidget {
   final AppModel appModel;
 
-  const PromotionDialog(this.appModel, {Key key}) : super(key: key);
+  const PromotionDialog(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

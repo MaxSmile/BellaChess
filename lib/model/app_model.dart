@@ -32,7 +32,7 @@ class AppModel extends ChangeNotifier {
   Player playerSide = Player.player1;
   int timeLimit = 15;
   String pieceTheme = 'Classic';
-  String themeName = 'Dark';
+  String? themeName = 'Dark';
 
   String boardColor = BoardColor.lightTile;
 
@@ -42,8 +42,8 @@ class AppModel extends ChangeNotifier {
   bool showHints = true;
   bool flip = true;
 
-  ChessGame game;
-  Timer timer;
+  ChessGame? game;
+  Timer? timer;
   bool gameOver = false;
   bool stalemate = false;
   bool promotionRequested = false;
@@ -59,11 +59,11 @@ class AppModel extends ChangeNotifier {
     return pieceThemes;
   }
 
-  InterstitialAd _interstitialAd;
+  InterstitialAd? _interstitialAd;
 
   void tryToShowAds() {
     if (_interstitialAd != null) {
-      _interstitialAd.show();
+      _interstitialAd!.show();
     }
   }
 
@@ -135,10 +135,10 @@ class AppModel extends ChangeNotifier {
   void newGame(BuildContext context, {bool notify = true}) {
     _loadInterstitialAd();
     if (game != null) {
-      game.cancelAIMove();
+      game!.cancelAIMove();
     }
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
     gameOver = false;
     stalemate = false;
@@ -171,8 +171,8 @@ class AppModel extends ChangeNotifier {
   }
 
   void exitChessView() {
-    game.cancelAIMove();
-    timer.cancel();
+    game!.cancelAIMove();
+    timer!.cancel();
 
     notifyListeners();
   }
@@ -254,7 +254,7 @@ class AppModel extends ChangeNotifier {
   void setTheme(int index) async {
     themeName = themeList[index].name;
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('themeName', themeName);
+    prefs.setString('themeName', themeName!);
     notifyListeners();
   }
 

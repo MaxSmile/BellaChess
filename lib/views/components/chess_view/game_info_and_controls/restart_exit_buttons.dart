@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class RestartExitButtons extends StatelessWidget {
   final AppModel appModel;
 
-  const RestartExitButtons(this.appModel, {Key key}) : super(key: key);
+  const RestartExitButtons(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

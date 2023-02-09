@@ -3,12 +3,12 @@ import 'move.dart';
 
 class MoveStackObject {
   Move move;
-  ChessPiece movedPiece;
-  ChessPiece takenPiece;
-  ChessPiece enPassantPiece;
+  ChessPiece? movedPiece;
+  ChessPiece? takenPiece;
+  ChessPiece? enPassantPiece;
   bool castled = false;
   bool promotion = false;
-  ChessPieceType promotionType;
+  ChessPieceType? promotionType;
   bool enPassant = false;
   List<List<Move>> possibleOpenings;
 

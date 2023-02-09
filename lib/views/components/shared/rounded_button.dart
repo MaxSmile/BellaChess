@@ -5,7 +5,7 @@ class RoundedButton extends StatelessWidget {
   final String label;
   final Function onPressed;
 
-  const RoundedButton(this.label, {Key key, @required this.onPressed})
+  const RoundedButton(this.label, {Key? key, required this.onPressed})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
           ),
         ),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
       ),
       width: double.infinity,
       height: 60,

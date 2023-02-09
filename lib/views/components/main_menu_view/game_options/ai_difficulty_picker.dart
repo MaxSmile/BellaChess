@@ -9,9 +9,9 @@ import 'picker.dart';
 class AIDifficultyPicker extends StatefulWidget {
   final int aiDifficulty;
   final Function setFunc;
-  final String themeName;
+  final String? themeName;
 
-  AIDifficultyPicker(this.aiDifficulty, this.setFunc, this.themeName, {Key key})
+  AIDifficultyPicker(this.aiDifficulty, this.setFunc, this.themeName, {Key? key})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class AIDifficultyPicker extends StatefulWidget {
 }
 
 class _AIDifficultyPickerState extends State<AIDifficultyPicker> {
-  Map<int, Widget> difficultyOptions;
+  Map<int, Widget>? difficultyOptions;
 
   @override
   void initState() {

@@ -34,7 +34,7 @@ const KING_QUEEN_MOVES = [
   UP_LEFT
 ];
 
-List<Move> allMoves(Player player, ChessBoard board, int aiDifficulty) {
+List<Move?> allMoves(Player? player, ChessBoard board, int? aiDifficulty) {
   List<MoveAndValue> moves = [];
   var pieces = List.from(piecesForPlayer(player, board));
   for (var piece in pieces) {
@@ -45,14 +45,14 @@ List<Move> allMoves(Player player, ChessBoard board, int aiDifficulty) {
         for (var promotion in PROMOTIONS) {
           var move =
               MoveAndValue(Move(piece.tile, tile, promotionType: promotion), 0);
-          push(move.move, board, promotionType: promotion);
+          push(move.move!, board, promotionType: promotion);
           move.value = boardValue(board);
           pop(board);
           moves.add(move);
         }
       } else {
         var move = MoveAndValue(Move(piece.tile, tile), 0);
-        push(move.move, board);
+        push(move.move!, board);
         move.value = boardValue(board);
         pop(board);
         moves.add(move);
@@ -64,7 +64,7 @@ List<Move> allMoves(Player player, ChessBoard board, int aiDifficulty) {
 }
 
 int _compareMoves(
-    MoveAndValue a, MoveAndValue b, Player player, ChessBoard board) {
+    MoveAndValue a, MoveAndValue b, Player? player, ChessBoard board) {
   return player == Player.player1
       ? b.value.compareTo(a.value)
       : a.value.compareTo(b.value);
@@ -184,7 +184,7 @@ List<int> _rookCastleMove(ChessPiece rook, ChessBoard board, bool legal) {
   if (!legal || !kingInCheck(rook.player, board)) {
     var king = kingForPlayer(rook.player, board);
     if (_canCastle(king, rook, board, legal)) {
-      return [king.tile];
+      return [king!.tile];
     }
   }
   return [];
@@ -194,7 +194,7 @@ List<int> _kingCastleMoves(ChessPiece king, ChessBoard board, bool legal) {
   List<int> moves = [];
   if (!legal || !kingInCheck(king.player, board)) {
     for (var rook in rooksForPlayer(king.player, board)) {
-      if (_canCastle(king, rook, board, legal)) {
+      if (_canCastle(king, rook!, board, legal)) {
         moves.add(rook.tile);
       }
     }
@@ -203,8 +203,8 @@ List<int> _kingCastleMoves(ChessPiece king, ChessBoard board, bool legal) {
 }
 
 bool _canCastle(
-    ChessPiece king, ChessPiece rook, ChessBoard board, bool legal) {
-  if (rook.moveCount == 0 && king.moveCount == 0) {
+    ChessPiece? king, ChessPiece rook, ChessBoard board, bool legal) {
+  if (rook.moveCount == 0 && king!.moveCount == 0) {
     var offset = king.tile - rook.tile > 0 ? 1 : -1;
     var tile = rook.tile;
     while (tile != king.tile) {
@@ -263,10 +263,10 @@ bool _kingInCheckAtTile(int tile, Player player, ChessBoard board) {
   return false;
 }
 
-bool kingInCheck(Player player, ChessBoard board) {
+bool kingInCheck(Player? player, ChessBoard board) {
   for (var piece in piecesForPlayer(oppositePlayer(player), board)) {
     if (movesForPiece(piece, board, legal: false)
-        .contains(kingForPlayer(player, board).tile)) {
+        .contains(kingForPlayer(player, board)!.tile)) {
       return true;
     }
   }

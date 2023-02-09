@@ -10,14 +10,14 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class WebViewScreensShow extends StatefulWidget {
   
-  const WebViewScreensShow({Key key}) : super(key: key);
+  const WebViewScreensShow({Key? key}) : super(key: key);
 
   @override
   State<WebViewScreensShow> createState() => _WebViewScreensShowState();
 }
 
 class _WebViewScreensShowState extends State<WebViewScreensShow> {
-  WebViewController _controller;
+  late WebViewController _controller;
   var loadingPercentage = 0;
   final String initial_url = "https://bellachess.org/mobile";
 

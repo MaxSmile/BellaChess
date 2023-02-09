@@ -8,8 +8,8 @@ enum Player { player1, player2, random }
 class SidePicker extends StatefulWidget {
   final Player playerSide;
   final Function setFunc;
-  final String themeName;
-  const SidePicker(this.playerSide, this.setFunc, this.themeName, {Key key})
+  final String? themeName;
+  const SidePicker(this.playerSide, this.setFunc, this.themeName, {Key? key})
       : super(key: key);
 
   @override
@@ -17,7 +17,7 @@ class SidePicker extends StatefulWidget {
 }
 
 class _SidePickerState extends State<SidePicker> {
-  Map<Player, Widget> colorOptions;
+  Map<Player, Widget>? colorOptions;
   @override
   void initState() {
     playertext();

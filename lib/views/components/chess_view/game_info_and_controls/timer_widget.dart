@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class TimerWidget extends StatelessWidget {
   final Duration timeLeft;
   final Color color;
-  final String themename;
+  final String? themename;
 
   const TimerWidget(
-      {Key key, @required this.timeLeft, @required this.color, this.themename})
+      {Key? key, required this.timeLeft, required this.color, this.themename})
       : super(key: key);
 
   @override

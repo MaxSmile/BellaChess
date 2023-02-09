@@ -26,8 +26,8 @@ class TilesColors {
 }
 
 class AppTheme {
-  String name;
-  LinearGradient background;
+  String? name;
+  LinearGradient? background;
 
   TilesColors tilesColors;
 
@@ -89,6 +89,6 @@ List<AppTheme> get themeList {
       border: const Color(0xffA68463),
     ),
   ];
-  themeList.sort((a, b) => a.name.compareTo(b.name));
+  themeList.sort((a, b) => a.name!.compareTo(b.name!));
   return themeList;
 }

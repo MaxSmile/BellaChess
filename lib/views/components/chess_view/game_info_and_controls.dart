@@ -7,7 +7,7 @@ class GameInfoAndControls extends StatelessWidget {
   final AppModel appModel;
   final ScrollController scrollController = ScrollController();
 
-  GameInfoAndControls(this.appModel, {Key key}) : super(key: key);
+  GameInfoAndControls(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

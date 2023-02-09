@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GameStatusComputerScreen extends StatelessWidget {
-  const GameStatusComputerScreen({Key key}) : super(key: key);
+  const GameStatusComputerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

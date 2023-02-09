@@ -14,7 +14,7 @@ const STALEMATE_ALPHA = -20000;
 const INITIAL_BETA = 40000;
 const STALEMATE_BETA = 20000;
 
-Move calculateAIMove(Map args) {
+Move? calculateAIMove(Map args) {
   ChessBoard board = args['board'];
   if (board.possibleOpenings.isNotEmpty) {
     return _openingMove(board, args['aiPlayer']);
@@ -25,15 +25,15 @@ Move calculateAIMove(Map args) {
   }
 }
 
-MoveAndValue _alphaBeta(ChessBoard board, Player player, Move move, int depth,
-    int maxDepth, int alpha, int beta) {
+MoveAndValue _alphaBeta(ChessBoard board, Player? player, Move? move, int depth,
+    int? maxDepth, int alpha, int beta) {
   if (depth == maxDepth) {
     return MoveAndValue(move, boardValue(board));
   }
   var bestMove = MoveAndValue(
       null, player == Player.player1 ? INITIAL_ALPHA : INITIAL_BETA);
   for (var move in allMoves(player, board, maxDepth)) {
-    push(move, board, promotionType: move.promotionType);
+    push(move!, board, promotionType: move.promotionType);
     var result = _alphaBeta(
         board, oppositePlayer(player), move, depth + 1, maxDepth, alpha, beta);
     result.move = move;
@@ -68,7 +68,7 @@ MoveAndValue _alphaBeta(ChessBoard board, Player player, Move move, int depth,
   return bestMove;
 }
 
-Move _openingMove(ChessBoard board, Player aiPlayer) {
+Move _openingMove(ChessBoard board, Player? aiPlayer) {
   List<Move> possibleMoves = board.possibleOpenings
       .map((opening) => opening[board.moveCount])
       .toList();

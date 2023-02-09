@@ -11,7 +11,7 @@ import 'toggle.dart';
 class Toggles extends StatelessWidget {
   final AppModel appModel;
 
-  const Toggles(this.appModel, {Key key}) : super(key: key);
+  const Toggles(this.appModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -13,8 +13,8 @@ import '../../settings_view.dart';
 class MainMenuButtons extends StatelessWidget {
   final AppModel appModel;
 
-  MainMenuButtons(this.appModel, {Key key}) : super(key: key);
-  InterstitialAd interstitialAd;
+  MainMenuButtons(this.appModel, {Key? key}) : super(key: key);
+  InterstitialAd? interstitialAd;
 
   @override
   Widget build(BuildContext context) {

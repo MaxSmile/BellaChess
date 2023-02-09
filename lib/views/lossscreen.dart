@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LossScreen extends StatelessWidget {
-  final String colorname;
-  final Function callback;
+  final String? colorname;
+  final Function? callback;
 
-  const LossScreen({Key key, this.callback, this.colorname}) : super(key: key);
+  const LossScreen({Key? key, this.callback, this.colorname}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,14 @@ class LossScreen extends StatelessWidget {
                 IconButton(
                   color: Colors.white,
                   onPressed: () {
-                    callback("ok");
+                    callback!("ok");
                   },
                   icon: Icon(Icons.close),
                 ),
               ],
             ),
             Text(
-              colorname,
+              colorname!,
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             Text(
@@ -53,7 +53,7 @@ class LossScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                callback("play");
+                callback!("play");
               },
               child: Container(
                 height: MediaQuery.of(context).size.height * .05,

@@ -4,7 +4,7 @@ enum ChessPieceType { pawn, rook, knight, bishop, king, queen, promotion }
 
 class ChessPiece {
   int id;
-  ChessPieceType type;
+  ChessPieceType? type;
   Player player;
   int moveCount = 0;
   int tile;

@@ -10,14 +10,14 @@ import 'components/settings_view/toggles.dart';
 import 'components/shared/text_variable.dart';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({Key key}) : super(key: key);
+  const SettingsView({Key? key}) : super(key: key);
 
   @override
   State<SettingsView> createState() => _SettingsViewState();
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  InterstitialAd interstitialAd;
+  InterstitialAd? interstitialAd;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _SettingsViewState extends State<SettingsView> {
                           : Colors.black),
                 ],
               ),
-              Text(appModel.themeName),
+              Text(appModel.themeName!),
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,

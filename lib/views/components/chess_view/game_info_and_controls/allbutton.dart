@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 class AllButtonsScreen extends StatelessWidget {
   final AppModel appModel;
 
-  const AllButtonsScreen(this.appModel, {Key key}) : super(key: key);
+  const AllButtonsScreen(this.appModel, {Key? key}) : super(key: key);
   bool get undoEnabled {
     if (appModel.playingWithAI) {
-      return appModel.game.board.moveStack.length > 1 && !appModel.isAIsTurn;
+      return appModel.game!.board.moveStack.length > 1 && !appModel.isAIsTurn;
     } else {
-      return appModel.game.board.moveStack.isNotEmpty;
+      return appModel.game!.board.moveStack.isNotEmpty;
     }
   }
 
   bool get redoEnabled {
     if (appModel.playingWithAI) {
-      return appModel.game.board.redoStack.length > 1 && !appModel.isAIsTurn;
+      return appModel.game!.board.redoStack.length > 1 && !appModel.isAIsTurn;
     } else {
-      return appModel.game.board.redoStack.isNotEmpty;
+      return appModel.game!.board.redoStack.isNotEmpty;
     }
   }
 
@@ -71,18 +71,18 @@ class AllButtonsScreen extends StatelessWidget {
   void undo() {
     appModel.tryToShowAds();
     if (appModel.playingWithAI) {
-      appModel.game.undoTwoMoves();
+      appModel.game!.undoTwoMoves();
     } else {
-      appModel.game.undoMove();
+      appModel.game!.undoMove();
     }
   }
 
   void redo() {
     appModel.tryToShowAds();
     if (appModel.playingWithAI) {
-      appModel.game.redoTwoMoves();
+      appModel.game!.redoTwoMoves();
     } else {
-      appModel.game.redoMove();
+      appModel.game!.redoMove();
     }
   }
 }

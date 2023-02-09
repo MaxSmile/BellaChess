@@ -5,7 +5,7 @@ class TextDefault extends StatelessWidget {
   final String text;
   final Color color;
 
-  const TextDefault(this.text, {Key key, this.color = CupertinoColors.white})
+  const TextDefault(this.text, {Key? key, this.color = CupertinoColors.white})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class TextDefault extends StatelessWidget {
 class TextSmall extends StatelessWidget {
   final String text;
 
-  const TextSmall(this.text, {Key key}) : super(key: key);
+  const TextSmall(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +35,14 @@ class TextSmall extends StatelessWidget {
 }
 
 class TextSmallnew extends StatelessWidget {
-  final String text;
-  final String name;
+  final String? text;
+  final String? name;
 
-  const TextSmallnew(this.text, this.name, {Key key}) : super(key: key);
+  const TextSmallnew(this.text, this.name, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(text,
+    return Text(text!,
         style: TextStyle(
             color: name == "Dark" ? Colors.white : Colors.black,
             fontSize: 24,
@@ -53,9 +53,9 @@ class TextSmallnew extends StatelessWidget {
 
 class TextRegular extends StatelessWidget {
   final String text;
-  final Color color;
+  final Color? color;
 
-  const TextRegular(this.text, {Key key, this.color}) : super(key: key);
+  const TextRegular(this.text, {Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +70,8 @@ class TextRegular extends StatelessWidget {
 
 class TextRegularboard extends StatelessWidget {
   final String text;
-  final Color color;
-  const TextRegularboard(this.text, {Key key, this.color}) : super(key: key);
+  final Color? color;
+  const TextRegularboard(this.text, {Key? key, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class TextRegulars extends StatelessWidget {
   final String text;
   final Color color;
 
-  const TextRegulars(this.text, this.color, {Key key}) : super(key: key);
+  const TextRegulars(this.text, this.color, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class TextRegulars extends StatelessWidget {
 class TextLarge extends StatelessWidget {
   final String text;
 
-  const TextLarge(this.text, {Key key}) : super(key: key);
+  const TextLarge(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -116,11 +116,11 @@ class TextLarge extends StatelessWidget {
 
 class TextLarges extends StatelessWidget {
   final String text;
-  final Color color;
+  final Color? color;
 
   const TextLarges(
     this.text, {
-    Key key,
+    Key? key,
     this.color,
   }) : super(key: key);
 
@@ -136,10 +136,10 @@ class TextLarges extends StatelessWidget {
 }
 
 class Backbutton extends StatelessWidget {
-  final Color color;
+  final Color? color;
 
   const Backbutton({
-    Key key,
+    Key? key,
     this.color,
   }) : super(key: key);
 
