@@ -93,10 +93,26 @@ class _ChessViewState extends State<ChessView> {
                       ),
                     ),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: const GameStatusComputerScreen(),
-                  ),
+                  if (!appModel.flip)
+                    appModel.playerSide != Player.player1
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatus(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatusComputerScreen(),
+                          ),
+                  if (appModel.flip)
+                    appModel.playerSide != Player.player1
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatus(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatusComputerScreen(),
+                          ),
                   const SizedBox(height: 20),
 
                   Stack(
@@ -156,10 +172,27 @@ class _ChessViewState extends State<ChessView> {
                   ),
 
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: const GameStatus(),
-                  ),
+                  if (appModel.flip)
+                    appModel.playerSide == Player.player1
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatus(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatusComputerScreen(),
+                          ),
+                  if (!appModel.flip)
+                    appModel.playerSide == Player.player1
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatus(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const GameStatusComputerScreen(),
+                          ),
+
                   const Spacer(),
                   GameInfoAndControls(appModel),
 

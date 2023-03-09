@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:async/async.dart';
 import 'package:bellachess/logic/chess_piece_sprite.dart';
 import 'package:bellachess/logic/move_calculation/ai_move_calculation.dart';
@@ -33,10 +35,14 @@ class ChessGame extends FlameGame with TapDetector {
   Move? latestMove;
 
   ChessGame(this.appModel, this.context) {
+    // print("object data");
+    // log(appModel.toString());
+    // log(context.toString());
     width = MediaQuery.of(context).size.width;
     tileSize = width / 9;
     for (var piece in board.player1Pieces + board.player2Pieces) {
-      spriteMap[piece] = ChessPieceSprite(piece, appModel.pieceTheme);
+      spriteMap[piece] =
+          ChessPieceSprite(piece, appModel.pieceTheme, appModel.flip);
     }
     _initSpritePositions();
     if (appModel.isAIsTurn) {

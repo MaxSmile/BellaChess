@@ -146,6 +146,7 @@ class AppModel extends ChangeNotifier {
     moveMetaList = [];
     player1TimeLeft = Duration(minutes: timeLimit);
     player2TimeLeft = Duration(minutes: timeLimit);
+
     if (selectedSide == Player.random) {
       playerSide =
           Random.secure().nextInt(2) == 0 ? Player.player1 : Player.player2;
@@ -299,6 +300,12 @@ class AppModel extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     this.flip = flip;
     prefs.setBool('flip', flip);
+    if (flip) {
+      setPlayerSide(Player.player1);
+      Player.player1;
+    } else {
+      setPlayerSide(Player.player2);
+    }
     notifyListeners();
   }
 

@@ -37,6 +37,7 @@ class GameOptions extends StatelessWidget {
                       appModel.selectedSide,
                       appModel.setPlayerSide,
                       appModel.themeName,
+                      appModel.flip,
                     ),
                     const SizedBox(height: 20),
                   ],

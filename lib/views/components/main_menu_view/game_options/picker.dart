@@ -35,6 +35,7 @@ class Picker<T> extends StatelessWidget {
             children: options!,
             groupValue: selection,
             onValueChanged: (T? val) {
+              print("val $val");
               setFunc!(val);
             },
             thumbColor: themeName == "Dark"
