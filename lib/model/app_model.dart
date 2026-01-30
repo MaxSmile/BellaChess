@@ -5,6 +5,8 @@ import 'dart:math';
 import 'package:bellachess/coach/ai_coach_service.dart';
 import 'package:bellachess/coach/models.dart';
 import 'package:bellachess/etudes/etude_service.dart';
+import 'package:bellachess/web3/nft_manager.dart';
+import 'package:bellachess/web3/web3_service.dart';
 import 'package:bellachess/logic/chess_game.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:bellachess/logic/shared_functions.dart';
@@ -55,6 +57,25 @@ class AppModel extends ChangeNotifier {
   String? _currentEtudeId;
   int _currentEtudeMoveIndex = 0;
   DateTime? _currentEtudeStartTime;
+  
+  // Web3 NFT Integration
+  final Web3Service _web3Service = Web3Service();
+  final NFTManager _nftManager;
+
+  ChessGame? game;
+  Timer? timer;
+  bool gameOver = false;
+  bool stalemate = false;
+  bool promotionRequested = false;
+  bool moveListUpdated = false;
+  Player turn = Player.player1;
+  List<MoveMeta> moveMetaList = [];
+  Duration player1TimeLeft = Duration.zero;
+  Duration player2TimeLeft = Duration.zero;
+
+  AppModel() : _nftManager = NFTManager(Web3Service()) {
+    loadSharedPrefs();
+  }
 
   ChessGame? game;
   Timer? timer;
@@ -143,6 +164,15 @@ class AppModel extends ChangeNotifier {
   int get currentEtudeMoveIndex => _currentEtudeMoveIndex;
   
   bool get isInEtudeMode => _currentEtudeId != null;
+
+  // Web3 NFT getters
+  bool get isWalletConnected => _web3Service.isWalletConnected;
+  
+  String? get connectedWalletAddress => _web3Service.connectedWalletAddress;
+  
+  List<NFTItem> get ownedNFTs => _web3Service.getOwnedNFTs();
+  
+  List<PendingNFTMint> get pendingNFTMints => _web3Service.getPendingMints();
 
   Player get aiTurn {
     return oppositePlayer(playerSide);
@@ -512,6 +542,136 @@ class AppModel extends ChangeNotifier {
   Map<String, dynamic> getEtudePlayerStats() {
     final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
     return _etudeService.getPlayerStats(playerId);
+  }
+
+  // Web3 NFT Methods
+  /// Connect to a wallet
+  Future<bool> connectWallet(String walletAddress) async {
+    final success = await _web3Service.connectWallet(walletAddress);
+    notifyListeners();
+    return success;
+  }
+
+  /// Disconnect from wallet
+  Future<void> disconnectWallet() async {
+    await _web3Service.disconnectWallet();
+    notifyListeners();
+  }
+
+  /// Award a tournament NFT
+  Future<bool> awardTournamentNFT({
+    required String tournamentId,
+    required int rank,
+    required int totalParticipants,
+    String? gameFen,
+    String? gamePgn,
+    int? ratingGained,
+  }) async {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    final playerName = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'Player';
+    
+    final success = await _nftManager.awardTournamentNFT(
+      playerId: playerId,
+      tournamentId: tournamentId,
+      playerName: playerName,
+      rank: rank,
+      totalParticipants: totalParticipants,
+      gameFen: gameFen,
+      gamePgn: gamePgn,
+      ratingGained: ratingGained,
+    );
+    
+    notifyListeners();
+    return success;
+  }
+
+  /// Award a rating milestone NFT
+  Future<bool> awardRatingMilestoneNFT({
+    required double newRating,
+    required double previousRating,
+    String? gameFen,
+    String? gamePgn,
+  }) async {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    
+    final success = await _nftManager.awardRatingMilestoneNFT(
+      playerId: playerId,
+      newRating: newRating,
+      previousRating: previousRating,
+      gameFen: gameFen,
+      gamePgn: gamePgn,
+    );
+    
+    notifyListeners();
+    return success;
+  }
+
+  /// Award an etude mastery NFT
+  Future<bool> awardMasteryNFT({
+    required dynamic etude, // Using dynamic to avoid circular imports
+    String? gameFen,
+    String? gamePgn,
+    int? ratingGained,
+  }) async {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    final playerName = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'Player';
+    
+    // Since we're using dynamic, we'll just pass placeholder values
+    final success = await _nftManager.awardMasteryNFT(
+      playerId: playerId,
+      etude: etude, // This would be a proper Etude object in a full implementation
+      playerName: playerName,
+      gameFen: gameFen,
+      gamePgn: gamePgn,
+      ratingGained: ratingGained,
+    );
+    
+    notifyListeners();
+    return success;
+  }
+
+  /// Award an achievement NFT
+  Future<bool> awardAchievementNFT({
+    required String achievementType,
+    required String achievementName,
+    required String achievementDescription,
+    String? gameFen,
+    String? gamePgn,
+    int? ratingGained,
+    String? relatedEntityId,
+  }) async {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    
+    final success = await _nftManager.awardAchievementNFT(
+      playerId: playerId,
+      achievementType: achievementType,
+      achievementName: achievementName,
+      achievementDescription: achievementDescription,
+      gameFen: gameFen,
+      gamePgn: gamePgn,
+      ratingGained: ratingGained,
+      relatedEntityId: relatedEntityId,
+    );
+    
+    notifyListeners();
+    return success;
+  }
+
+  /// Get NFTs for the current player
+  List<NFTItem> getPlayerNFTs() {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    return _nftManager.getNFTsForPlayer(playerId);
+  }
+
+  /// Get NFTs by category
+  List<NFTItem> getNFTsByCategory(NFTCategory category) {
+    return _nftManager.getNFTsByCategory(category);
+  }
+
+  /// Check if player has earned a specific NFT type
+  bool hasPlayerEarnedNFT(NFTCategory category, {String? specificId}) {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    return _nftManager.hasPlayerEarnedNFT(playerId, category, specificId: specificId);
   }
 
   void update() {
