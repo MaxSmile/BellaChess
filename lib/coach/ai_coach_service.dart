@@ -8,6 +8,9 @@ import 'package:bellachess/logic/move_calculation/move_classes/move.dart';
 
 class AI_CoachService {
   final AICoach _aiCoach = AICoach();
+  final Set<String> _completedTrainings = {};
+  final List<String> _improvementAreas = [];
+  final List<String> _strengths = [];
 
   /// Get the current player profile
   PlayerProfile? getPlayerProfile() {
@@ -107,5 +110,55 @@ class AI_CoachService {
     }
 
     return recommendations.take(count).toList();
+  }
+
+  /// Record training activity and update player profile
+  Future<void> recordTrainingActivity(String trainingType, bool successful) async {
+    // Update the player's profile based on training activity
+    // This would typically update internal tracking of the player's progress
+    if (successful) {
+      // Add the training type to completed activities
+      _completedTrainings.add(trainingType);
+      
+      // Potentially adjust improvement areas based on successful training
+      if (_improvementAreas.contains(trainingType)) {
+        _improvementAreas.remove(trainingType);
+        _strengths.add(trainingType);
+      }
+    } else {
+      // If training wasn't successful, potentially reinforce it as an improvement area
+      if (!_improvementAreas.contains(trainingType)) {
+        _improvementAreas.add(trainingType);
+      }
+    }
+  }
+
+  /// Get identified weaknesses for the player
+  List<String> getIdentifiedWeaknesses(String playerId) {
+    final profile = getPlayerProfile(playerId);
+    if (profile.containsKey('improvementAreas')) {
+      return List<String>.from(profile['improvementAreas'] ?? []);
+    }
+    // In a real implementation, this would analyze the player's data
+    // For now, we'll return a sample list based on common weaknesses
+    return ['tactics', 'endgame', 'calculation'];
+  }
+
+  /// Get player profile data with additional tracking information
+  Map<String, dynamic> getPlayerProfile(String playerId) {
+    // Get the base profile from the AI Coach
+    final aiCoachProfile = _aiCoach.getPlayerProfile();
+    
+    // Return a map containing player-specific data
+    return {
+      'playerId': playerId,
+      'improvementAreas': _improvementAreas.isEmpty && aiCoachProfile != null 
+          ? aiCoachProfile.improvementAreas 
+          : _improvementAreas,
+      'strengths': _strengths,
+      'completedTrainings': _completedTrainings.toList(),
+      'rating': aiCoachProfile?.rating ?? 1200.0,
+      'skillAreas': aiCoachProfile?.skillAreas ?? {},
+    };
   }
 }

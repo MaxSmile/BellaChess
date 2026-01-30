@@ -19,6 +19,7 @@ class Etude {
   final String description; // Explanation of the concept
   final DateTime createdAt;
   final String author; // Creator of the etude
+  final List<String> tags; // Additional tags for better categorization
 
   Etude({
     required this.id,
@@ -35,6 +36,7 @@ class Etude {
     required this.description,
     required this.createdAt,
     required this.author,
+    this.tags = const [],
   });
 
   /// Check if a move is the correct next move in the solution

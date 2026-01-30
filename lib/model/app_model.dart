@@ -674,6 +674,84 @@ class AppModel extends ChangeNotifier {
     return _nftManager.hasPlayerEarnedNFT(playerId, category, specificId: specificId);
   }
 
+  /// Get recommended etudes based on AI Coach analysis of weaknesses
+  List<Etude> getRecommendedEtudesForWeakness(String weakness) {
+    // Get etudes that target the specific weakness
+    final allEtudes = _etudeService.getAllEtudes();
+    return allEtudes.where((etude) => 
+        etude.theme.toLowerCase().contains(weakness.toLowerCase()) || 
+        etude.tags.any((tag) => tag.toLowerCase().contains(weakness.toLowerCase()))
+    ).toList();
+  }
+
+  /// Process etude completion and update AI Coach profile
+  Future<void> processEtudeCompletion(Etude etude, bool mastered) async {
+    if (mastered) {
+      // Update AI Coach with the successful mastery
+      await _aiCoachService.recordTrainingActivity(etude.theme, mastered);
+      
+      // Award an NFT for mastering the etude if eligible
+      final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+      final playerName = playerProfile?.name ?? 'Player';
+      
+      await _nftManager.awardMasteryNFT(
+        playerId: playerId,
+        etude: etude,
+        playerName: playerName,
+        ratingGained: 10, // Example rating gain for etude mastery
+      );
+    }
+    
+    notifyListeners();
+  }
+
+  /// Award NFT for skill improvement based on AI Coach analysis
+  Future<void> awardNFTForSkillImprovement(String skillArea, double improvement) async {
+    if (improvement >= 50) { // Threshold for awarding NFT
+      final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+      
+      await _nftManager.awardAchievementNFT(
+        playerId: playerId,
+        achievementType: 'skill_improvement',
+        achievementName: 'Skill Improvement: $skillArea',
+        achievementDescription: 'Awarded for improving $skillArea by ${improvement.round()} points',
+        ratingGained: improvement.round(),
+      );
+    }
+  }
+
+  /// Get player's combined profile showing all three systems
+  Map<String, dynamic> getCombinedPlayerProfile() {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    
+    return {
+      'playerId': playerId,
+      'playerName': playerProfile?.name ?? 'Player',
+      'currentRating': game?.getCurrentRating() ?? 1200.0,
+      'aiCoachProfile': _aiCoachService.getPlayerProfile(playerId),
+      'etudeProgress': _etudeService.getPlayerStats(playerId),
+      'nftCollection': _nftManager.getNFTsForPlayer(playerId),
+      'lastActive': DateTime.now(),
+    };
+  }
+
+  /// Get personalized learning path combining AI Coach recommendations and etudes
+  List<dynamic> getPersonalizedLearningPath() {
+    final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
+    
+    // Get weaknesses from AI Coach
+    final weaknesses = _aiCoachService.getIdentifiedWeaknesses(playerId);
+    
+    // Find relevant etudes for each weakness
+    final List<dynamic> learningPath = [];
+    for (final weakness in weaknesses) {
+      final etudes = getRecommendedEtudesForWeakness(weakness);
+      learningPath.addAll(etudes.take(3)); // Take up to 3 etudes per weakness
+    }
+    
+    return learningPath;
+  }
+
   void update() {
     notifyListeners();
   }

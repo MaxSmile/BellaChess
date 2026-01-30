@@ -52,6 +52,7 @@ class EtudeEngine {
         description: 'Knight fork: Attack two pieces simultaneously with your knight.',
         createdAt: DateTime(2023, 1, 15),
         author: 'BellaChess',
+        tags: ['tactics', 'beginner', 'fork', 'knight'],
       ),
       Etude(
         id: 'tac_002',
@@ -64,6 +65,7 @@ class EtudeEngine {
         description: 'Discovery attack: Move a piece to reveal an attack from a long-range piece.',
         createdAt: DateTime(2023, 1, 15),
         author: 'BellaChess',
+        tags: ['tactics', 'intermediate', 'discovery', 'bishop'],
       ),
       Etude(
         id: 'end_001',
@@ -76,6 +78,7 @@ class EtudeEngine {
         description: 'King opposition: Understanding the concept of opposition in king and pawn endgames.',
         createdAt: DateTime(2023, 1, 15),
         author: 'BellaChess',
+        tags: ['endgame', 'advanced', 'opposition', 'king'],
       ),
       Etude(
         id: 'tac_003',
@@ -88,6 +91,7 @@ class EtudeEngine {
         description: 'Relative pin: Pin an enemy piece that cannot legally move without exposing a more valuable piece.',
         createdAt: DateTime(2023, 1, 15),
         author: 'BellaChess',
+        tags: ['tactics', 'intermediate', 'pin', 'bishop'],
       ),
     ]);
   }
@@ -386,5 +390,13 @@ class EtudeEngine {
   /// Get all etudes in the library
   List<Etude> getAllEtudes() {
     return _etudeLibrary;
+  }
+
+  /// Get etudes that target a specific weakness
+  List<Etude> getEtudesForWeakness(String weakness) {
+    return _etudeLibrary.where((etude) => 
+        etude.theme.toLowerCase().contains(weakness.toLowerCase()) || 
+        etude.tags.any((tag) => tag.toLowerCase().contains(weakness.toLowerCase()))
+    ).toList();
   }
 }

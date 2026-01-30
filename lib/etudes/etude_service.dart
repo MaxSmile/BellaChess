@@ -109,4 +109,24 @@ class EtudeService {
     // Access the internal library through a getter method
     return _engine.getAllEtudes();
   }
+
+  /// Mark an etude as completed by a player
+  Future<void> markEtudeCompleted(String playerId, String etudeId, bool mastered) async {
+    // Record the attempt which tracks completion
+    await recordAttempt(
+      playerId: playerId,
+      etudeId: etudeId,
+      successful: mastered,
+      solveTimeInSeconds: 0, // Placeholder
+    );
+  }
+
+  /// Get etudes that target a specific weakness
+  List<Etude> getEtudesForWeakness(String weakness) {
+    final allEtudes = getFullLibrary();
+    return allEtudes.where((etude) => 
+        etude.theme.toLowerCase().contains(weakness.toLowerCase()) || 
+        etude.tags.any((tag) => tag.toLowerCase().contains(weakness.toLowerCase()))
+    ).toList();
+  }
 }
