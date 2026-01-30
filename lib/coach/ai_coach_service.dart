@@ -136,9 +136,19 @@ class AI_CoachService {
   /// Get identified weaknesses for the player
   List<String> getIdentifiedWeaknesses(String playerId) {
     final profile = getPlayerProfile(playerId);
-    if (profile.containsKey('improvementAreas')) {
-      return List<String>.from(profile['improvementAreas'] ?? []);
+    if (profile.containsKey('improvementAreas') && profile['improvementAreas'] != null) {
+      if (profile['improvementAreas'] is List) {
+        return List<String>.from(profile['improvementAreas']);
+      } else if (profile['improvementAreas'] is List<dynamic>) {
+        return (profile['improvementAreas'] as List<dynamic>).cast<String>();
+      }
     }
+    
+    // Fallback to AI Coach's internal tracking
+    if (_improvementAreas.isNotEmpty) {
+      return _improvementAreas;
+    }
+    
     // In a real implementation, this would analyze the player's data
     // For now, we'll return a sample list based on common weaknesses
     return ['tactics', 'endgame', 'calculation'];

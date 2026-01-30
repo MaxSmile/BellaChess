@@ -419,11 +419,59 @@ class AppModel extends ChangeNotifier {
       );
       
       _lastGameAnalysis = gameAnalysis;
+      
+      // Award NFT for game completion if significant improvement occurred
+      if (gameAnalysis.performanceRatingChange > 50) { // Significant rating gain
+        await awardAchievementNFT(
+          achievementType: 'performance_improvement',
+          achievementName: 'Significant Rating Gain',
+          achievementDescription: 'Awarded for gaining ${gameAnalysis.performanceRatingChange.round()} rating points in a single game',
+          ratingGained: gameAnalysis.performanceRatingChange.round(),
+        );
+      }
+      
+      // Recommend etudes based on identified weaknesses in the game
+      _recommendEtudesBasedOnAnalysis(gameAnalysis);
+      
       _currentGameAnalyses.clear(); // Reset for next game
       
       notifyListeners();
     } catch (e) {
       print("Error analyzing game: $e");
+    }
+  }
+
+  /// Recommend etudes based on game analysis results
+  void _recommendEtudesBasedOnAnalysis(GameAnalysis gameAnalysis) {
+    // Identify key weaknesses from the game analysis
+    final weaknesses = <String>[];
+    
+    // Add tactical weaknesses
+    if (gameAnalysis.suggestions.tacticalAreas.isNotEmpty) {
+      weaknesses.addAll(gameAnalysis.suggestions.tacticalAreas);
+    }
+    
+    // Add strategic weaknesses
+    if (gameAnalysis.suggestions.strategicAreas.isNotEmpty) {
+      weaknesses.addAll(gameAnalysis.suggestions.strategicAreas);
+    }
+    
+    // Add specific weaknesses based on mistake patterns
+    if (gameAnalysis.mistakeSummary.blunders > 2) {
+      weaknesses.add('calculation');
+    }
+    if (gameAnalysis.mistakeSummary.mistakes > 3) {
+      weaknesses.add('tactics');
+    }
+    
+    // For each identified weakness, suggest relevant etudes
+    for (final weakness in weaknesses) {
+      final recommendedEtudes = getRecommendedEtudesForWeakness(weakness);
+      if (recommendedEtudes.isNotEmpty) {
+        // Store the recommendations for the user to access
+        // In a real implementation, this would be saved to a user's recommendation queue
+        print("Recommended etudes for weakness '$weakness': ${recommendedEtudes.length} found");
+      }
     }
   }
 
@@ -739,6 +787,41 @@ class AppModel extends ChangeNotifier {
     }
     
     return learningPath;
+  }
+
+  /// Get etude recommendations based on the last game analysis
+  List<Etude> getEtudeRecommendationsFromLastGame() {
+    if (_lastGameAnalysis == null) {
+      return [];
+    }
+
+    final recommendations = <Etude>[];
+    final gameAnalysis = _lastGameAnalysis!;
+    
+    // Get tactical recommendations
+    for (final tacticalArea in gameAnalysis.suggestions.tacticalAreas) {
+      final etudes = getRecommendedEtudesForWeakness(tacticalArea);
+      recommendations.addAll(etudes.take(2));
+    }
+    
+    // Get strategic recommendations
+    for (final strategicArea in gameAnalysis.suggestions.strategicAreas) {
+      final etudes = getRecommendedEtudesForWeakness(strategicArea);
+      recommendations.addAll(etudes.take(2));
+    }
+    
+    // Add recommendations based on mistake patterns
+    if (gameAnalysis.mistakeSummary.blunders > 2) {
+      final calculationEtudes = getRecommendedEtudesForWeakness('calculation');
+      recommendations.addAll(calculationEtudes.take(2));
+    }
+    
+    if (gameAnalysis.mistakeSummary.mistakes > 3) {
+      final tacticsEtudes = getRecommendedEtudesForWeakness('tactics');
+      recommendations.addAll(tacticsEtudes.take(2));
+    }
+    
+    return recommendations;
   }
 
   void update() {
