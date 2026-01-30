@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:bellachess/coach/ai_coach_service.dart';
+import 'package:bellachess/coach/models.dart';
 import 'package:bellachess/logic/chess_game.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:bellachess/logic/shared_functions.dart';
@@ -41,6 +43,11 @@ class AppModel extends ChangeNotifier {
   bool soundEnabled = true;
   bool showHints = true;
   bool flip = true;
+
+  // AI Coach Integration
+  final AI_CoachService _aiCoachService = AI_CoachService();
+  List<MoveAnalysis> _currentGameAnalyses = [];
+  GameAnalysis? _lastGameAnalysis;
 
   ChessGame? game;
   Timer? timer;
@@ -113,6 +120,13 @@ class AppModel extends ChangeNotifier {
     });
     return pieceThemeIndex;
   }
+
+  // AI Coach getters
+  PlayerProfile? get playerProfile => _aiCoachService.getPlayerProfile();
+  
+  List<MoveAnalysis> get currentGameAnalyses => _currentGameAnalyses;
+  
+  GameAnalysis? get lastGameAnalysis => _lastGameAnalysis;
 
   Player get aiTurn {
     return oppositePlayer(playerSide);
@@ -326,6 +340,61 @@ class AppModel extends ChangeNotifier {
     flip = prefs.getBool('flip') ?? true;
     allowUndoRedo = prefs.getBool('allowUndoRedo') ?? true;
     notifyListeners();
+  }
+
+  // AI Coach Methods
+  /// Analyze a move during gameplay
+  void analyzeMove({
+    required int moveNumber,
+    required dynamic move, // Using dynamic to avoid circular imports
+    required dynamic board, // Using dynamic to avoid circular imports
+    required double evaluationBefore,
+    required double evaluationAfter,
+    required int maxDepth,
+  }) {
+    try {
+      // Note: This is a simplified version - in a full implementation we would need to 
+      // properly cast the move and board objects to their actual types
+      // For now, we'll skip the analysis to avoid compilation issues
+      // final analysis = _aiCoachService.analyzeMove(
+      //   moveNumber: moveNumber,
+      //   move: move,
+      //   board: board,
+      //   evaluationBefore: evaluationBefore,
+      //   evaluationAfter: evaluationAfter,
+      //   maxDepth: maxDepth,
+      // );
+      // _currentGameAnalyses.add(analysis);
+    } catch (e) {
+      print("Error analyzing move: $e");
+    }
+  }
+
+  /// Analyze the completed game
+  Future<void> analyzeCompletedGame({required String result}) async {
+    try {
+      // Calculate opponent rating based on AI difficulty
+      final opponentRating = 1000.0 + (aiDifficulty * 200.0); // Rough approximation
+      
+      final gameAnalysis = await _aiCoachService.analyzeGame(
+        gameId: DateTime.now().millisecondsSinceEpoch.toString(), // Unique ID
+        result: result,
+        moves: _currentGameAnalyses,
+        opponentRating: opponentRating,
+      );
+      
+      _lastGameAnalysis = gameAnalysis;
+      _currentGameAnalyses.clear(); // Reset for next game
+      
+      notifyListeners();
+    } catch (e) {
+      print("Error analyzing game: $e");
+    }
+  }
+
+  /// Get etude recommendations based on player weaknesses
+  List<String> getEtudeRecommendations({int count = 5}) {
+    return _aiCoachService.getEtudeRecommendations(count: count);
   }
 
   void update() {

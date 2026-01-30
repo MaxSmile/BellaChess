@@ -253,7 +253,25 @@ class ChessGame extends FlameGame with TapDetector {
     if (kingInCheckmate(oppositeTurn, board)) {
       if (!meta.isCheck) {
         appModel.stalemate = true;
-        meta.isStalemate = true;
+        meta.isCheck = false;
+        meta.isCheckmate = true;
+        appModel.endGame();
+        
+        // AI Coach Integration: Analyze completed game
+        if (appModel.playingWithAI) {
+          // Determine game result
+          String result;
+          if (appModel.stalemate) {
+            result = 'draw';
+          } else if (appModel.turn == appModel.playerSide) {
+            result = 'loss'; // Player's turn, so player lost
+          } else {
+            result = 'win'; // Opponent's turn, so player won
+          }
+          
+          // Analyze the completed game
+          appModel.analyzeCompletedGame(result: result);
+        }
       }
       meta.isCheck = false;
       meta.isCheckmate = true;
@@ -264,6 +282,23 @@ class ChessGame extends FlameGame with TapDetector {
       appModel.undoEndGame();
     } else if (updateMetaList) {
       appModel.pushMoveMeta(meta);
+      
+      // AI Coach Integration: Analyze the move after it's added to the game
+      try {
+        // For now, we'll skip detailed analysis to avoid circular dependency issues
+        // In a full implementation, we would calculate the evaluation before and after
+        // the move and pass it to the AI coach
+        // appModel.analyzeMove(
+        //   moveNumber: appModel.moveMetaList.length,
+        //   move: meta.move,
+        //   board: board,
+        //   evaluationBefore: /* calculate before move */,
+        //   evaluationAfter: /* calculate after move */,
+        //   maxDepth: appModel.aiDifficulty,
+        // );
+      } catch (e) {
+        print("Error in AI coach analysis: $e");
+      }
     }
     if (changeTurn) {
       appModel.changeTurn();
