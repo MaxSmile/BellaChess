@@ -3,10 +3,11 @@
 
 import 'package:bellachess/web3/models.dart';
 import 'package:bellachess/web3/web3_service.dart';
+import 'package:bellachess/interfaces/chess_types.dart';
 import 'package:bellachess/etudes/models.dart';
 import 'package:bellachess/coach/models.dart';
 
-class NFTManager {
+class NFTManager implements NFTManager {
   final Web3Service _web3Service;
   
   NFTManager(this._web3Service);

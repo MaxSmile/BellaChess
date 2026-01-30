@@ -3,10 +3,11 @@
 
 import 'package:bellachess/etudes/etude_engine.dart';
 import 'package:bellachess/etudes/models.dart';
+import 'package:bellachess/interfaces/chess_types.dart';
 import 'package:bellachess/logic/chess_board.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move.dart';
 
-class EtudeService {
+class EtudeService implements EtudeValidator, EtudeManager {
   final EtudeEngine _engine = EtudeEngine();
 
   /// Get an etude by ID

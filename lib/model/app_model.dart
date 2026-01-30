@@ -7,7 +7,10 @@ import 'package:bellachess/coach/models.dart';
 import 'package:bellachess/etudes/etude_service.dart';
 import 'package:bellachess/web3/nft_manager.dart';
 import 'package:bellachess/web3/web3_service.dart';
+import 'package:bellachess/interfaces/chess_types.dart';
 import 'package:bellachess/logic/chess_game.dart';
+import 'package:bellachess/logic/move_calculation/move_classes/move.dart';
+import 'package:bellachess/logic/chess_board.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move_meta.dart';
 import 'package:bellachess/logic/shared_functions.dart';
 import 'package:bellachess/model/app_stringfile.dart';
@@ -381,25 +384,22 @@ class AppModel extends ChangeNotifier {
   /// Analyze a move during gameplay
   void analyzeMove({
     required int moveNumber,
-    required dynamic move, // Using dynamic to avoid circular imports
-    required dynamic board, // Using dynamic to avoid circular imports
+    required Move move,
+    required ChessBoard board,
     required double evaluationBefore,
     required double evaluationAfter,
     required int maxDepth,
   }) {
     try {
-      // Note: This is a simplified version - in a full implementation we would need to 
-      // properly cast the move and board objects to their actual types
-      // For now, we'll skip the analysis to avoid compilation issues
-      // final analysis = _aiCoachService.analyzeMove(
-      //   moveNumber: moveNumber,
-      //   move: move,
-      //   board: board,
-      //   evaluationBefore: evaluationBefore,
-      //   evaluationAfter: evaluationAfter,
-      //   maxDepth: maxDepth,
-      // );
-      // _currentGameAnalyses.add(analysis);
+      final analysis = _aiCoachService.analyzeMove(
+        moveNumber: moveNumber,
+        move: move,
+        board: board,
+        evaluationBefore: evaluationBefore,
+        evaluationAfter: evaluationAfter,
+        maxDepth: maxDepth,
+      );
+      _currentGameAnalyses.add(analysis);
     } catch (e) {
       print("Error analyzing move: $e");
     }
@@ -490,35 +490,35 @@ class AppModel extends ChangeNotifier {
   }
 
   /// Get a specific etude by ID
-  dynamic getEtudeById(String id) {
-    // Return dynamic to avoid circular import issues
+  Etude? getEtudeById(String id) {
     return _etudeService.getEtudeById(id);
   }
 
   /// Get etudes by category
-  List<dynamic> getEtudesByCategory(String category) {
-    // Return dynamic to avoid circular import issues
-    return _etudeService.getEtudesByCategory(category).cast<dynamic>();
+  List<Etude> getEtudesByCategory(String category) {
+    return _etudeService.getEtudesByCategory(category);
   }
 
   /// Get a recommended etude based on player progress
-  dynamic getRecommendedEtude() {
+  Etude? getRecommendedEtude() {
     final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
-    // Return dynamic to avoid circular import issues
     return _etudeService.getRecommendedEtude(playerId);
   }
 
   /// Validate a move in the current etude
   bool validateEtudeMove({
-    required dynamic move, // Using dynamic to avoid circular imports
-    required dynamic board, // Using dynamic to avoid circular imports
+    required Move move,
+    required ChessBoard board,
   }) {
     if (_currentEtudeId == null) return false;
     
     try {
-      // In a full implementation, we would call the service with proper typed parameters
-      // For now, we'll return true to avoid compilation errors
-      return true;
+      return _etudeService.validateMove(
+        etudeId: _currentEtudeId!,
+        move: move,
+        currentMoveIndex: _currentEtudeMoveIndex,
+        board: board,
+      );
     } catch (e) {
       print("Error validating etude move: $e");
       return false;
@@ -526,11 +526,10 @@ class AppModel extends ChangeNotifier {
   }
 
   /// Get a hint for the current etude position
-  dynamic getEtudeHint() {
+  EtudeHint? getEtudeHint() {
     if (_currentEtudeId == null) return null;
     
     try {
-      // Return dynamic to avoid circular import issues
       return _etudeService.getHint(_currentEtudeId!, _currentEtudeMoveIndex);
     } catch (e) {
       print("Error getting etude hint: $e");
@@ -645,18 +644,17 @@ class AppModel extends ChangeNotifier {
 
   /// Award an etude mastery NFT
   Future<bool> awardMasteryNFT({
-    required dynamic etude, // Using dynamic to avoid circular imports
+    required Etude etude,
     String? gameFen,
     String? gamePgn,
     int? ratingGained,
   }) async {
     final playerId = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'default';
-    final playerName = playerProfile?.createdAt.millisecondsSinceEpoch.toString() ?? 'Player';
+    final playerName = playerProfile?.name ?? 'Player';
     
-    // Since we're using dynamic, we'll just pass placeholder values
     final success = await _nftManager.awardMasteryNFT(
       playerId: playerId,
-      etude: etude, // This would be a proper Etude object in a full implementation
+      etude: etude,
       playerName: playerName,
       gameFen: gameFen,
       gamePgn: gamePgn,

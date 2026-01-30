@@ -3,10 +3,11 @@
 
 import 'package:bellachess/coach/ai_coach.dart';
 import 'package:bellachess/coach/models.dart';
+import 'package:bellachess/interfaces/chess_types.dart';
 import 'package:bellachess/logic/chess_board.dart';
 import 'package:bellachess/logic/move_calculation/move_classes/move.dart';
 
-class AI_CoachService {
+class AI_CoachService implements MoveAnalyzer {
   final AICoach _aiCoach = AICoach();
   final Set<String> _completedTrainings = {};
   final List<String> _improvementAreas = [];
