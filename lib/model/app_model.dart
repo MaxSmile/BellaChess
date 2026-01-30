@@ -77,17 +77,6 @@ class AppModel extends ChangeNotifier {
     loadSharedPrefs();
   }
 
-  ChessGame? game;
-  Timer? timer;
-  bool gameOver = false;
-  bool stalemate = false;
-  bool promotionRequested = false;
-  bool moveListUpdated = false;
-  Player turn = Player.player1;
-  List<MoveMeta> moveMetaList = [];
-  Duration player1TimeLeft = Duration.zero;
-  Duration player2TimeLeft = Duration.zero;
-
   List<String> get pieceThemes {
     var pieceThemes = List<String>.from(PIECE_THEMES);
     pieceThemes.sort();
@@ -677,7 +666,7 @@ class AppModel extends ChangeNotifier {
   /// Get recommended etudes based on AI Coach analysis of weaknesses
   List<Etude> getRecommendedEtudesForWeakness(String weakness) {
     // Get etudes that target the specific weakness
-    final allEtudes = _etudeService.getAllEtudes();
+    final allEtudes = _etudeService.getFullLibrary();
     return allEtudes.where((etude) => 
         etude.theme.toLowerCase().contains(weakness.toLowerCase()) || 
         etude.tags.any((tag) => tag.toLowerCase().contains(weakness.toLowerCase()))
