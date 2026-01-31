@@ -1,146 +1,23 @@
-# Bella Chess
+# BellaChess Monorepo
 
-An Open Source Flutter Chess game project.
+Welcome to the BellaChess monorepo! This repository contains all the code for the BellaChess ecosystem, including the legacy Flutter app, the new Next.js web app, and native mobile wrappers.
 
-![BellaChess Image](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/1024x500.jpg?alt=media&token=c5f4bb66-662d-4e03-9d28-a96b06a1e132)
+## Structure
 
-## Description 
-
-Play classic chess on your Android with Bella Chess. Easy-to-use interface, multiple difficulty levels, and customizable options.
-
-### Short Description:
-Play chess with Bella Chess. Easy-to-use interface, multiple difficulty levels
-
-### Long Description:
-Bella Chess is a beautifully designed chess game. The app features an elegant and simple user interface, which makes it easy to play against the computer or another player. The game includes various difficulty levels and styling options.
-
-### Keywords 
-
-Chess, Classic, Strategy, Tactics, Board game
-
-
-## Available on App Markets
-
-[![Get it on Google Play](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/get-it-on-google-play.png?alt=media&token=5579314b-45fb-4097-b302-ab7f73ba1239)](https://play.google.com/store/apps/details?id=org.bellachess.mobile)
-
-https://play.google.com/store/apps/details?id=org.bellachess.mobile
-
-
-[![Available on the AppStore](https://firebasestorage.googleapis.com/v0/b/smrt16-d1904.appspot.com/o/AppStoreIcon.png?alt=media&token=3680cc4a-7ede-4b08-a77d-f31e622213bc)](https://apps.apple.com/us/app/bella-chess/id1669084126)
-
-https://apps.apple.com/us/app/bella-chess/id1669084126 
-
-## TODO / Roadmap
-1. Play online with friends
-2. Track your progress with a leaderboard
-3. Maintain a games history
-4. Integrate with Bellachess.org for enhanced gaming experience.
+- `legacy-flutter/` - The original Flutter application (with AI Coach, Etude System, and Web3 integrations)
+- `web/` - The new Next.js web application
+- `ios/` - Native iOS wrapper for the web app (planned)
+- `android/` - Native Android wrapper for the web app (planned)
+- `docs/` - Project documentation
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### For Developers
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone the repository
+2. Navigate to the relevant subdirectory (`legacy-flutter` or `web`)
+3. Install dependencies and run the app according to the respective README in each directory
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Contributing
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-# Flutter CLI crib
-
-## Test on device connected
-
-To list devices available:
-
-`
-flutter devices
-`
-
-Second column reperesents devices ID. Then (example! You will have your device ID):
-
-`
-flutter run -d 09071FDD4002GR
-`
-
-where 09071FDD4002GR is some device id
-
-
- ## Test in iPhone simulator
-
-`
-open -a Simulator
-flutter run -d iPhone
-`
-
-
-## Build APK
-
-`
-flutter build apk
-`
-
-## Release keys generation
-
-`
-keytool -genkey -v -keystore ./upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload -storetype JKS
-`
-
-
-## Versionning
-
-* in pubspec.yml version: 1.0.0+1
-
-* change to version: 1.0.0+2
-
-* flutter build ios --release-name --release-number will update version in ios
-
-* flutter pub get && flutter run will update version for android (android/local.properties)
-
-in case of troubles:
-
-`
-flutter clean
-
-flutter pub cache repair 
-
-flutter pub get 
-
-flutter run
-
-`
-
-# Release build
-
-Android 
-`
-flutter build appbundle 
-`
-
-iOS
-`
-flutter build ipa
-`
-
-## if ios buld error
-
-Try:
-
-`
-flutter clean
-`
-
-delete /ios/Pods
-delete /ios/Podfile.lock
-
-`
-flutter pub get
-`
-
-from inside ios folder: `pod install`
-
-`
-flutter run
-`
+Please refer to the documentation in the `docs/` directory for contribution guidelines.
