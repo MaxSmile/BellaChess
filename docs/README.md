@@ -17,7 +17,7 @@ Mobile App, iOS, Android, Flutter, Web, Next.js, AI, Game, Web3, DApp, Blockchai
 ## Core features (intended)
 **Play**
 - AI opponents with adjustable strength
-- Post-game analysis and suggested alternatives (TBD: engine + depth + UX)
+- Post-game analysis and suggested alternatives (see `ENGINE.md` for engine strategy + interface contract)
 
 **Learn**
 - Personalized AI coach (adaptive difficulty + guidance)
