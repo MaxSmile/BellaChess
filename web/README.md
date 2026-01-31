@@ -19,6 +19,12 @@ BellaChess is a modern chess platform that includes:
 - **AI**: Stockfish WebAssembly integration
 - **Web3**: Polygon integration for NFTs
 
+## Testing
+
+Unit tests (Vitest):
+- `npm test`
+- `npm run test:watch`
+
 ## Getting Started
 
 First, run the development server:
