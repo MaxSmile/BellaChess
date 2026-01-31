@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { track } from '@/lib/telemetry';
 
 interface Piece {
   type: 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
@@ -33,23 +34,70 @@ const ChessBoard = () => {
   const [board, setBoard] = useState<(Piece | null)[][]>(initialBoard());
   const [selectedSquare, setSelectedSquare] = useState<[number, number] | null>(null);
   const [currentPlayer, setCurrentPlayer] = useState<'white' | 'black'>('white');
+  const [hasStarted, setHasStarted] = useState(false);
+  const [moveCount, setMoveCount] = useState(0);
+
+  const initialFen = useMemo(() => 'startpos', []);
+
+  // We treat mounting the board as the start of "Try to play".
+  useEffect(() => {
+    track('try_play_started', { surface: 'web', page: 'home' });
+  }, []);
+
+  const toSquare = (r: number, c: number) => {
+    const file = String.fromCharCode('a'.charCodeAt(0) + c);
+    const rank = String(8 - r);
+    return `${file}${rank}`;
+  };
 
   const handleSquareClick = (row: number, col: number) => {
     // Basic square selection logic
     if (selectedSquare) {
       // Move the selected piece to this square
       const [selectedRow, selectedCol] = selectedSquare;
-      const newBoard = [...board.map(r => [...r])];
-      
-      if (newBoard[selectedRow][selectedCol]?.color === currentPlayer) {
-        // Move the piece
-        newBoard[row][col] = newBoard[selectedRow][selectedCol];
+      const newBoard = [...board.map((r) => [...r])];
+
+      const movingPiece = newBoard[selectedRow][selectedCol];
+      const destPiece = newBoard[row][col];
+
+      if (movingPiece?.color === currentPlayer) {
+        // (toy rules) Move the piece
+        newBoard[row][col] = movingPiece;
         newBoard[selectedRow][selectedCol] = null;
-        
+
+        const nextMoveCount = moveCount + 1;
+
+        if (!hasStarted) {
+          setHasStarted(true);
+          track('game_started', { surface: 'web', initial_fen: initialFen });
+        }
+
+        const capture = Boolean(destPiece);
+        track('move_made', {
+          surface: 'web',
+          from: toSquare(selectedRow, selectedCol),
+          to: toSquare(row, col),
+          piece: movingPiece.type,
+          color: movingPiece.color,
+          capture,
+          move_count: nextMoveCount,
+        });
+
+        // End condition (toy): capturing the king ends the game.
+        if (destPiece?.type === 'king') {
+          track('game_completed', {
+            surface: 'web',
+            winner: movingPiece.color,
+            reason: 'king_captured',
+            move_count: nextMoveCount,
+          });
+        }
+
+        setMoveCount(nextMoveCount);
         setBoard(newBoard);
         setCurrentPlayer(currentPlayer === 'white' ? 'black' : 'white');
       }
-      
+
       setSelectedSquare(null);
     } else {
       // Select a square if it contains a piece of the current player
